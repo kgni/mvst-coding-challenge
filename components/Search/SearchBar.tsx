@@ -5,17 +5,17 @@ import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 const SearchBar = (props: any) => {
 	const [placeholderState, setPlaceholderState] = useState(props.placeholder);
 	const [isFocus, setIsFocus] = useState(false);
-	console.log(props.inputValue);
+	console.log(props.value);
 	// the two onFocus and onBlur functions, does so we are not causing a re-render every single time we focus or blur.
 	function onFocusSetPlaceholder() {
-		if (!props.inputValue) {
+		if (!props.value) {
 			setPlaceholderState('');
 		}
 		setIsFocus(true);
 	}
 
 	function onBlurSetPlaceholder() {
-		if (!props.inputValue) {
+		if (!props.value) {
 			setPlaceholderState(props.placeholder);
 		}
 		setIsFocus(false);
@@ -33,16 +33,15 @@ const SearchBar = (props: any) => {
 
 	return (
 		<form className="">
-			<div className="flex w-96 max-w-full mx-auto items-center relative">
+			<div className="flex mx-auto items-center relative mb-2">
 				<input
 					{...props}
 					onFocus={onFocusSetPlaceholder}
 					onBlur={onBlurSetPlaceholder}
 					onChange={onChangeSetValue}
-					value={props.inputValue}
 					placeholder={placeholderState}
 				></input>
-				{!props.inputValue && !isFocus && (
+				{!props.value && !isFocus && (
 					<label htmlFor="search" className="absolute right-2">
 						{' '}
 						<AiOutlineSearch
@@ -53,7 +52,7 @@ const SearchBar = (props: any) => {
 					</label>
 				)}
 
-				{(isFocus || props.inputValue) && (
+				{(isFocus || props.value) && (
 					<AiOutlineClose
 						onMouseDown={onMouseDownClearInput}
 						className={`${
