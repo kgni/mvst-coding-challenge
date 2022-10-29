@@ -1,3 +1,6 @@
+// TODO - how do I get to condtionally display something depending on if it is null or not?
+// Is this the corrent way of setting stuff optional?
+
 export interface User {
 	id: number;
 	name: string;
@@ -15,6 +18,7 @@ export interface User {
 	email?: string;
 	twitter_username?: string;
 	public_repos: number;
+	repos: Repo[];
 }
 
 export interface UserSearchResult {
@@ -31,10 +35,10 @@ export interface Repo {
 	id: number;
 	name: string;
 	html_url: string;
-	description?: string;
+	description: string | null;
 	updated_at: string;
 	language?: string;
 	forks_count: number;
 }
 
-export type ToastStatus = 'succes' | 'error';
+export type ToastStatus = 'success' | 'error';
