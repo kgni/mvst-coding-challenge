@@ -5,11 +5,17 @@ import axios from 'axios';
 
 import UserAside from '../../components/User/UserAside';
 
+// TODO - create main side
+
+// TODO - create pagination
+
+// TODO - how are we gonna search by keyword? (we can only fetch 100 pages at max, so we need to be able to query the API, and not only the repos that you fetched initally.)
 const UserPage = ({ user }: { user: User }) => {
 	return (
 		<section className="min-h-screen bg-primary">
 			<div className="w-full max-w-5xl py-16 px-8  mx-auto text-text flex gap-4">
 				<UserAside user={user} />
+
 				<main className="w-2/3"></main>
 			</div>
 		</section>
