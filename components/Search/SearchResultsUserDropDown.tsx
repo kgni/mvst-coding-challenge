@@ -2,6 +2,16 @@ import Image from 'next/image';
 import React from 'react';
 import { UserSearchResult } from '../../model';
 import { motion } from 'framer-motion';
+
+// animation for dropdown
+const dropdownAnimation = {
+	key: 'dropdown',
+	initial: { opacity: 0 },
+	animate: { opacity: 1 },
+	transition: { duration: 0.1, staggerChildren: 1 },
+	exit: { opacity: 0, transition: { duration: 0.1 } },
+};
+
 const SearchResultsUserDropDown = ({
 	users,
 }: {
@@ -22,14 +32,7 @@ const SearchResultsUserDropDown = ({
 					))}
 				</ul>
 			)}
-			<motion.ul
-				key="dropdown"
-				initial={{ opacity: 0 }}
-				animate={{ opacity: 1 }}
-				transition={{ duration: 0.1, staggerChildren: 1 }}
-				className="w-full bg-white rounded-md"
-				exit={{ opacity: 0, transition: { duration: 0.1 } }}
-			>
+			<motion.ul {...dropdownAnimation} className="w-full bg-white rounded-md">
 				{Array(5)
 					.fill('hello')
 					.map((item, index) => (
