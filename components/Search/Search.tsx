@@ -5,6 +5,7 @@ import { UserSearchResult } from '../../model';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import axios from 'axios';
 import { AnimatePresence } from 'framer-motion';
+import Button from '../UI/Button';
 
 // fethc user function
 
@@ -21,7 +22,8 @@ import { AnimatePresence } from 'framer-motion';
 const Search = () => {
 	const [inputValue, setInputValue] = useState('');
 	const [users, setUsers] = useState<UserSearchResult[] | null>(null);
-	const baseURL = `https://api.github.com/users/kgni`;
+	const baseURL = `https://api.github.com/users/${inputValue}`;
+	console.log(baseURL);
 
 	// grab all users
 
@@ -58,8 +60,9 @@ const Search = () => {
 				/>
 				{/* AnimatePresence is used for exit animations (on unmount of the SearchResultsUserDropDown component) */}
 				<AnimatePresence>
-					{<SearchResultsUserDropDown users={users} />}
+					{inputValue && <SearchResultsUserDropDown users={users} />}
 				</AnimatePresence>
+				<Button>Find User</Button>
 			</div>
 		</section>
 	);
