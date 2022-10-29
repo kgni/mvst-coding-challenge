@@ -24,7 +24,7 @@ const SearchResultsUserDropDown = ({
 			{users && (
 				<motion.ul
 					{...dropdownAnimation}
-					className="w-full bg-white rounded-md"
+					className="w-full bg-white rounded-md mb-4"
 				>
 					{users.map((user, index) => (
 						<Link key={user.id} href={`/user/${user.login}`}>

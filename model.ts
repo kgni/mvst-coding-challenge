@@ -36,3 +36,5 @@ export interface Repo {
 	language?: string;
 	forks_count: number;
 }
+
+export type ToastStatus = 'succes' | 'error';

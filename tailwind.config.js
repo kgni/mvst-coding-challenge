@@ -19,6 +19,8 @@ module.exports = {
 				btnText: '#C9D1D9',
 				btnAccent: '#238636',
 				btnAccentHover: '#2ea043',
+				btnError: '#da3633',
+				btnErrorText: '#f85149',
 			},
 		},
 	},
