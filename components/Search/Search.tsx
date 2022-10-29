@@ -3,6 +3,8 @@ import SearchBar from './SearchBar';
 import SearchResultsUserDropDown from './SearchResultsUserDropDown';
 import { UserSearchResult } from '../../model';
 import { useQuery } from '@tanstack/react-query';
+
+import { AnimatePresence } from 'framer-motion';
 const Search = () => {
 	const [inputValue, setInputValue] = useState('');
 
@@ -24,7 +26,10 @@ const Search = () => {
 					setInputValue={setInputValue}
 					className="p-2 bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnText  text-btnText  duration-75"
 				/>
-				{inputValue && <SearchResultsUserDropDown users={users} />}
+				{/* AnimatePresence is used for exit animations (on unmount of the SearchResultsUserDropDown component) */}
+				<AnimatePresence>
+					{inputValue && <SearchResultsUserDropDown users={users} />}
+				</AnimatePresence>
 			</div>
 		</section>
 	);
