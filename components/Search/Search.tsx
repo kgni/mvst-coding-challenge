@@ -90,7 +90,7 @@ const Search: React.FC = () => {
 					{users && <SearchResultsUserDropDown users={users} />}
 				</AnimatePresence>
 				{/* TODO - Move this inside Searchbar inside the form (give better name to SearchBar) */}
-				<Button isLoading={isLoading} url={url} fetchUser={fetchUser}>
+				<Button isLoading={isLoading} onClick={() => fetchUser(url)}>
 					Find User
 				</Button>
 			</div>
