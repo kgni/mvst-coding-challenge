@@ -41,6 +41,7 @@ const Repo: React.FC<Props> = ({ repo, index }) => {
 					<div className="flex items-center gap-1">
 						<div
 							className={`w-[10px] h-[10px] rounded-full`}
+							// adding inline style like this because tailwind can't create the seperate classes for each color
 							style={{ backgroundColor: `${repo.languageColor}` }}
 						></div>
 						<span className="">{repo.language}</span>

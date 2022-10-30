@@ -21,7 +21,6 @@ const SearchBar: React.FC<Props> = ({
 }) => {
 	const [placeholderState, setPlaceholderState] = useState(placeholder);
 	const [isFocus, setIsFocus] = useState(false);
-	console.log(value);
 
 	// the two onFocus and onBlur functions, does so we are not causing a re-render every single time we focus or blur.
 
@@ -53,38 +52,36 @@ const SearchBar: React.FC<Props> = ({
 	}
 
 	return (
-		<form className="grow">
-			<div className="flex mx-auto items-center relative mb-2">
-				<input
-					type={type}
-					id={id}
-					className={className}
-					onFocus={onFocusSetPlaceholder}
-					onBlur={onBlurSetPlaceholder}
-					onChange={onChangeSetValue}
-					placeholder={placeholderState}
-				></input>
-				{!value && !isFocus && (
-					<label htmlFor={id} className="absolute right-2">
-						{' '}
-						<AiOutlineSearch
-							className={`${
-								isFocus ? 'text-btnText' : 'text-text'
-							}  text-xl cursor-pointer`}
-						/>
-					</label>
-				)}
-
-				{(isFocus || value) && (
-					<AiOutlineClose
-						onMouseDown={onMouseDownClearInput}
+		<div className="flex grow mx-auto items-center relative">
+			<input
+				type={type}
+				id={id}
+				className={className}
+				onFocus={onFocusSetPlaceholder}
+				onBlur={onBlurSetPlaceholder}
+				onChange={onChangeSetValue}
+				placeholder={placeholderState}
+			></input>
+			{!value && !isFocus && (
+				<label htmlFor={id} className="absolute right-2">
+					{' '}
+					<AiOutlineSearch
 						className={`${
 							isFocus ? 'text-btnText' : 'text-text'
-						}  text-xl cursor-pointer absolute right-2`}
+						}  text-xl cursor-pointer`}
 					/>
-				)}
-			</div>
-		</form>
+				</label>
+			)}
+
+			{(isFocus || value) && (
+				<AiOutlineClose
+					onMouseDown={onMouseDownClearInput}
+					className={`${
+						isFocus ? 'text-btnText' : 'text-text'
+					}  text-xl cursor-pointer absolute right-2`}
+				/>
+			)}
+		</div>
 	);
 };
 

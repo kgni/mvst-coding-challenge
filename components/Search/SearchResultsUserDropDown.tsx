@@ -17,7 +17,6 @@ interface Props {
 }
 
 const SearchResultsUserDropDown: React.FC<Props> = ({ users }) => {
-	console.log(users);
 	return (
 		<>
 			{users && (

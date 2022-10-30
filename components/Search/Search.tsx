@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, FormEventHandler } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import axios from 'axios';
 
@@ -66,36 +66,43 @@ const Search: React.FC = () => {
 		setErrorMessage(null);
 	}
 
+	function onSubmitSearchUser(event: React.SyntheticEvent) {
+		event.preventDefault();
+		fetchUser(url);
+	}
+
 	return (
 		// error in console, because setSearchTerm is not an input attribute. How do we keep making SearchBar dynamic, and still pass down the setSearchTerm function so we can generate state from that?
 
 		<section className="pt-48">
 			<div className="max-w-full w-96 mx-auto">
-				<SearchBar
-					type="input"
-					id="search"
-					placeholder="Enter GitHub username.."
-					value={searchTerm}
-					onChange={setSearchTerm}
-					className="p-2 bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnText  text-btnText  duration-75"
-				/>
-				{/* AnimatePresence is used for exit animations (on unmount of the SearchResultsUserDropDown component) */}
-				<AnimatePresence>
-					{/* {searchTerm && <SearchResultsUserDropDown users={users} />} */}
-					{errorMessage && (
-						<Toast
-							status="error"
-							onClose={setErrorFalse}
-							errorMessage={errorMessage}
-							className="text-white"
-						/>
-					)}
-					{users && <SearchResultsUserDropDown users={users} />}
-				</AnimatePresence>
-				{/* TODO - Move this inside Searchbar inside the form (give better name to SearchBar) */}
-				<Button isLoading={isLoading} onClick={() => fetchUser(url)}>
-					Find User
-				</Button>
+				<form onSubmit={onSubmitSearchUser}>
+					<SearchBar
+						type="input"
+						id="search"
+						placeholder="Enter GitHub username.."
+						value={searchTerm}
+						onChange={setSearchTerm}
+						className="p-2 bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnText  text-btnText  duration-75"
+					/>
+					{/* AnimatePresence is used for exit animations (on unmount of the SearchResultsUserDropDown component) */}
+					<AnimatePresence>
+						{/* {searchTerm && <SearchResultsUserDropDown users={users} />} */}
+						{errorMessage && (
+							<Toast
+								status="error"
+								onClose={setErrorFalse}
+								errorMessage={errorMessage}
+								className="text-white"
+							/>
+						)}
+						{users && <SearchResultsUserDropDown users={users} />}
+					</AnimatePresence>
+					{/* TODO - Move this inside Searchbar inside the form (give better name to SearchBar) */}
+					<Button isLoading={isLoading} className="w-full">
+						Find User
+					</Button>
+				</form>
 			</div>
 		</section>
 	);
