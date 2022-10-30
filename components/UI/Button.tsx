@@ -1,17 +1,14 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import { Oval } from 'react-loader-spinner';
-const Button = ({
-	children,
-	fetchUser,
-	url,
-	isLoading,
-}: {
-	children: React.ReactNode;
-	// TODO - Fix any type? How do I pass this function correctly to button
-	fetchUser: any;
+
+interface Props {
+	fetchUser: (fetchURL: string) => Promise<void>;
 	url: string;
 	isLoading: boolean;
-}) => {
+	children: React.ReactNode;
+}
+
+const Button: React.FC<Props> = ({ url, isLoading, fetchUser, children }) => {
 	return (
 		<button
 			onClick={() => fetchUser(url)}

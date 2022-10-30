@@ -1,8 +1,7 @@
-import Image from 'next/image';
-import React from 'react';
 import { UserSearchResult } from '../../model';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 
 // animation for dropdown
 const dropdownAnimation = {
@@ -13,11 +12,11 @@ const dropdownAnimation = {
 	exit: { opacity: 0, transition: { duration: 0.1 } },
 };
 
-const SearchResultsUserDropDown = ({
-	users,
-}: {
-	users: UserSearchResult[] | null;
-}) => {
+interface Props {
+	users: UserSearchResult[];
+}
+
+const SearchResultsUserDropDown: React.FC<Props> = ({ users }) => {
 	console.log(users);
 	return (
 		<>
@@ -39,12 +38,12 @@ const SearchResultsUserDropDown = ({
 								className="px-6 py-3 hover:bg-gray-200 cursor-pointer duration-100 first:rounded-t-md last:rounded-b-md border-b-[1px] last:border-b-transparent"
 							>
 								<div className="flex items-center gap-4">
-									<img
+									<Image
 										src={user.avatar_url}
 										alt="avatar"
 										className="w-16 h-16 rounded-full"
-										// width={50}
-										// height={50}
+										width={64}
+										height={64}
 									/>
 									<div className="flex flex-col items-start">
 										<h3 className="font-bold">{user.name}</h3>

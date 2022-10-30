@@ -16,7 +16,11 @@ const UserPage = ({ user }: { user: User }) => {
 			<div className="w-full max-w-5xl py-16 px-8  mx-auto text-text flex gap-4">
 				<UserAside user={user} />
 
-				<main className="w-2/3"></main>
+				<main className="w-2/3">
+					{/* TODO - create tabs */}
+					{/* create searchbar with sorting functionality */}
+					{/* create list of repos - fill star when clicking*/} =
+				</main>
 			</div>
 		</section>
 	);
