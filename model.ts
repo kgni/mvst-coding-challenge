@@ -1,5 +1,4 @@
-// TODO - how do I get to condtionally display something depending on if it is null or not?
-// Is this the corrent way of setting stuff optional?
+// TODO - READ UP ON API, AND DECIDE WHICH FIELDS CAN BE NULL - THEN CONDTIONALLY RENDER IN YOUR CODE DEPENDING ON IF IT CAN BE NULL OR NOT?
 
 export interface User {
 	id: number;
@@ -37,8 +36,9 @@ export interface Repo {
 	html_url: string;
 	description: string | null;
 	updated_at: string;
-	language?: string;
+	language: string | null;
 	forks_count: number;
+	visibility: string;
 }
 
 export type ToastStatus = 'success' | 'error';

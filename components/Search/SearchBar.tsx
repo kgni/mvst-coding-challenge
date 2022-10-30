@@ -5,19 +5,19 @@ import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 
 interface Props {
 	type: string;
-	id: string;
-	className: string;
+	id?: string;
+	className?: string;
 	value: string;
 	placeholder: string;
-	setSearchTerm: (val: string) => void;
+	onChange: (val: string) => void;
 }
 const SearchBar: React.FC<Props> = ({
 	type,
-	id,
+	id = 'search',
 	className,
 	value,
 	placeholder,
-	setSearchTerm,
+	onChange,
 }) => {
 	const [placeholderState, setPlaceholderState] = useState(placeholder);
 	const [isFocus, setIsFocus] = useState(false);
@@ -43,17 +43,17 @@ const SearchBar: React.FC<Props> = ({
 	}
 
 	function onMouseDownClearInput() {
-		setSearchTerm('');
+		onChange('');
 		setPlaceholderState(placeholder);
 		setIsFocus(false);
 	}
 
 	function onChangeSetValue(e: ChangeEvent<HTMLInputElement>) {
-		setSearchTerm(e.target.value);
+		onChange(e.target.value);
 	}
 
 	return (
-		<form className="">
+		<form className="grow">
 			<div className="flex mx-auto items-center relative mb-2">
 				<input
 					type={type}
@@ -65,7 +65,7 @@ const SearchBar: React.FC<Props> = ({
 					placeholder={placeholderState}
 				></input>
 				{!value && !isFocus && (
-					<label htmlFor="search" className="absolute right-2">
+					<label htmlFor={id} className="absolute right-2">
 						{' '}
 						<AiOutlineSearch
 							className={`${
