@@ -39,6 +39,7 @@ export interface Repo {
 	language: string | null;
 	forks_count: number;
 	visibility: string;
+	languageColor: string;
 }
 
 export type ToastStatus = 'success' | 'error';

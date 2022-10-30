@@ -25,6 +25,7 @@ const Search: React.FC = () => {
 	/* 
 	Currently we are just fetching one user, and we are doing it onclick.
 	The reason why we are doing it onClick, instead of onChange, is because we are limited to the amount of API calls we can do to the GitHub API.
+	https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting
 
 	For a better UX, we could have made the search onChange, with a debounced function that would ensure that we would only do a query once the user had finished typing (more or less). For now we are just sticking to a button
 
@@ -53,9 +54,11 @@ const Search: React.FC = () => {
 			setIsLoading(false);
 			setErrorMessage(null);
 		} catch (err) {
+			// check what statuscode we are getting and decide errormessage depending on that
 			setIsLoading(false);
 			setUsers([]);
 			setErrorMessage('No user found');
+			console.log(err);
 		}
 	}
 
