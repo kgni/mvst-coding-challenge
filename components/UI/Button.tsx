@@ -3,7 +3,7 @@ import { Oval } from 'react-loader-spinner';
 
 interface Props {
 	onClick: () => void;
-	isLoading: boolean;
+	isLoading?: boolean;
 	children: React.ReactNode;
 }
 
