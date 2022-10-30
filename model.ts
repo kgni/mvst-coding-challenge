@@ -3,20 +3,20 @@
 
 export interface User {
 	id: number;
-	name: string;
+	name: string | null;
 	login: string;
-	bio?: string;
+	bio: string | null;
 	avatar_url: string;
 	url: string;
 	html_url: string;
 	repos_url: string;
 	followers: number;
 	following: number;
-	company?: string;
-	blog?: string;
-	location?: string;
-	email?: string;
-	twitter_username?: string;
+	company: string | null;
+	blog: string | null;
+	location: string | null;
+	email: string | null;
+	twitter_username: string | null;
 	public_repos: number;
 	repos: Repo[];
 }

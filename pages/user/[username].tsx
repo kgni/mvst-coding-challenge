@@ -1,6 +1,6 @@
 import React from 'react';
 import { GetServerSideProps } from 'next';
-import { User, Repo } from '../../model';
+import { User } from '../../model';
 import axios from 'axios';
 
 import UserAside from '../../components/User/UserAside';
@@ -19,7 +19,7 @@ const UserPage = ({ user }: { user: User }) => {
 				<main className="w-2/3">
 					{/* TODO - create tabs */}
 					{/* create searchbar with sorting functionality */}
-					{/* create list of repos - fill star when clicking*/} =
+					{/* create list of repos - fill star when clicking*/}
 				</main>
 			</div>
 		</section>
