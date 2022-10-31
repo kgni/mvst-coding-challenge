@@ -32,6 +32,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 	const [page, setPage] = useState(1);
 	const [repos, setRepos] = useState<Repo[]>(user.repos);
 	const [isLoading, setIsLoading] = useState(false);
+	const [errorMessage, setErrorMessage] = useState('');
 	// not exactly sure how to import this JSON file, but this works for now.
 	// We are going to use this object, to match the language we got back from each repo.
 	// This color will be set in a variable, and used in each Repo list item.
@@ -58,8 +59,8 @@ const UserPage: React.FC<Props> = ({ user }) => {
 				// standard langauge color (if no langaugecolor was found)
 				let languageColor = '#8B949E';
 
-				// if there is a langauge, we set the language color to the HEX value specified for that language in the JSON file.
-				if (repo.language) {
+				// if there is a langauge, and there is a color for that languge from the JSON file we set the language color to the HEX value specified for that language in the JSON file.
+				if (repo.language && gitHubColorsObject[repo.language]?.color) {
 					languageColor = gitHubColorsObject[repo.language].color;
 				}
 
@@ -114,7 +115,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 					{/* using flex and flex-col to make container take up the remaining height */}
 					<main className="w-2/3 flex flex-col md:w-full">
 						{/* TODO - create tabs */}
-						<div className="flex mb-4 items-start justify-between">
+						<div className="flex mb-4 items-start justify-between sm:items-center">
 							<div className="flex items-center border-b-accent border-b-[1px] pb-2 gap-2">
 								<BiBookBookmark />
 								<p className="text-btnText">Repositories</p>

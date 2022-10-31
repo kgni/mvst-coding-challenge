@@ -17,7 +17,7 @@ const UserAsideTextMobile: React.FC<Props> = ({ user }) => {
 					{user.name && <h3 className="text-btnText text-xl">{user.name}</h3>}
 					<p> - {user.login}</p>
 				</div>
-				<div className="text-btnText font-light tracking-wide flex flex-col gap-1 text-sm">
+				<div className="text-btnText font-light tracking-wide flex flex-col text-sm">
 					<div className="flex justify-center items-center gap-2 mb-2">
 						{user.twitter_username && (
 							<a
@@ -38,7 +38,7 @@ const UserAsideTextMobile: React.FC<Props> = ({ user }) => {
 									className="hover:text-title"
 								>
 									{' '}
-									<FaGlobeEurope className="text-xl hover:text-btnText" />
+									<FaGlobeEurope className="text-xl hover:text-white" />
 								</a>
 							</div>
 						)}
