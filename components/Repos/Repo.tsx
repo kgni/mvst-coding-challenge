@@ -47,6 +47,7 @@ const Repo: React.FC<Props> = ({ repo, index }) => {
 						<span className="">{repo.language}</span>
 					</div>
 				)}
+				{repo.fork && <div>hello</div>}
 				<span>Updated {updatedAt} ago</span>
 			</div>
 		</motion.li>

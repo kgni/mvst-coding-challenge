@@ -18,15 +18,18 @@ interface Props {
 const UserAside: React.FC<Props> = ({ user }) => {
 	const isSmallMobile = useMediaQuery('(max-width: 628px)');
 	const isMediumMobile = useMediaQuery('(max-width: 768px)');
+
+	// getting scrollposition to decide when to show fixed UserTopBar
 	const scrollPosition = useScrollPosition();
 	// used to close the topbar, for now the user would have to reload or search up a new user to get it back.
 	const [isTopBarOpen, setIsTopBarOpen] = useState(true);
-	console.log(scrollPosition);
 
 	return (
 		<aside className="w-1/3 md:w-full md:flex md:gap-12 items-center justify-center md:mb-8 sm:mb-2 sm:flex-col sm:gap-0">
 			<Image
-				className="rounded-full md:max-w-[50%] mb-4 sm:w-full sm:mb-4 sm:max-w-[200px]"
+				// priority will preload the image.
+				priority
+				className="rounded-full md:max-w-[50%] mb-4 sm:w-full sm:mb-4 sm:max-w-auto"
 				src={user.avatar_url}
 				alt="avatar"
 				width={288}

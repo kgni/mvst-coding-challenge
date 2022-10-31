@@ -7,6 +7,17 @@ import axios from 'axios';
 // 	Authorization: `bearer ${process.env.API_ACCESS_TOKEN}`,
 // };
 
-export default (req: NextApiRequest, res: NextApiResponse) => {
-	res.status(200).json({ name: 'John Doe' });
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+	const { searchTerm } = req.query;
+	const data = await axios.get(
+		`https://api.github.com/search/users?q=${searchTerm}`,
+		{
+			headers: {
+				Accept: 'application/vnd.github+json',
+				Authorization: `Bearer ${process.env.API_ACCESS_TOKEN}`,
+			},
+		}
+	);
+	console.log(data.data);
+	res.status(200).json(data.data);
 };

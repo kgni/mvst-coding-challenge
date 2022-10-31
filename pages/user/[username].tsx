@@ -34,63 +34,10 @@ const UserPage: React.FC<Props> = ({ user }) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
 
-	// used to get the value for the y-scroll position, this is used to show a fixed element of go to top when we are scrolling past a certain point.
-
-	// not exactly sure how to import this JSON file, but this works for now.
-	// We are going to use this object, to match the language we got back from each repo.
-	// This color will be set in a variable, and used in each Repo list item.
-	const gitHubColorsObject = JSON.parse(JSON.stringify(gitHubColors));
-
-	console.log(page);
-
 	// getting repos length, this will be used to determine if we can continue to go to a new page.
 	const reposLength = repos.length;
 
-	async function fetchRepos(page?: number) {
-		try {
-			setIsLoading(true);
-			const { data: reposData } = await axios.get(
-				`https://api.github.com/users/${user.login}/repos?&page=${page}`
-			);
-
-			console.log(
-				`https://api.github.com/users/${user.login}/repos?&page=${page}`
-			);
-
-			// Sanitizing our repos data, to only contain what we need - not sure if this is the best way to do it.. We are still fetching all data from each repo anyways.
-			const repos: Repo[] = reposData.map((repo: Repo) => {
-				// standard langauge color (if no langaugecolor was found)
-				let languageColor = '#8B949E';
-
-				// if there is a langauge, and there is a color for that languge from the JSON file we set the language color to the HEX value specified for that language in the JSON file.
-				if (repo.language && gitHubColorsObject[repo.language]?.color) {
-					languageColor = gitHubColorsObject[repo.language].color;
-				}
-
-				return {
-					id: repo.id,
-					name: repo.name,
-					html_url: repo.html_url,
-					description: repo.description,
-					updated_at: repo.updated_at,
-					language: repo.language,
-					forks_count: repo.forks_count,
-					visibility: repo.visibility,
-					languageColor,
-				};
-			});
-
-			console.log(repos);
-			setRepos(repos);
-			setIsLoading(false);
-		} catch (e) {
-			console.log(e);
-		}
-	}
-
-	useEffect(() => {
-		fetchRepos(page);
-	}, [page]);
+	console.log(reposLength);
 
 	function onClickPreviousPage() {
 		// scroll to top when clicking on next/prev buttons
@@ -113,6 +60,13 @@ const UserPage: React.FC<Props> = ({ user }) => {
 			</Head>
 			<section className="bg-primary">
 				<div className="h-screen w-full max-w-5xl flex gap-16 py-16 px-8 md:py-8  mx-auto text-text overflow-hidden md:flex-col md:gap-0 md:min-h-screen md:h-full">
+					{/* back to search button - not sure if this should be placed here or below */}
+					{/* <Link
+						className="text-sm text-title hover:underline absolute right-8"
+						href={'/'}
+					>
+						Back to search
+					</Link> */}
 					<UserAside user={user} />
 
 					{/* using flex and flex-col to make container take up the remaining height */}
@@ -126,7 +80,10 @@ const UserPage: React.FC<Props> = ({ user }) => {
 									{user.public_repos}
 								</span>
 							</div>
-							<Link className="text-sm text-title hover:underline" href={'/'}>
+							<Link
+								className="text-sm text-title hover:underline absolute right-8"
+								href={'/'}
+							>
 								Back to search
 							</Link>
 						</div>
@@ -140,7 +97,6 @@ const UserPage: React.FC<Props> = ({ user }) => {
 									placeholder="Find a repository..."
 								/>
 								{/* TODO - fix this so button and search bar are same height */}
-								<Button className="px-4 py-[4px]">Search</Button>
 							</form>
 							{/* divider */}
 							<div className="w-full bg-btnBorder pr-2 h-[1px] mb-1"></div>
@@ -197,16 +153,77 @@ export const getServerSideProps: GetServerSideProps<{
 	// TODO - can we do anything else than fetching twice here? (Doesn't seem like it from the API)
 	// fetch user
 	const { data: userData } = await axios.get(
-		`https://api.github.com/users/${username}`
+		`https://api.github.com/users/${username}`,
+		{
+			headers: {
+				Authorization: `Bearer ${process.env.API_ACCESS_TOKEN}`,
+			},
+		}
 	);
 
 	//fetching repos: by default it is fetching 30
 	// https://docs.github.com/en/rest/repos/repos#list-repositories-for-a-user
-	const { data: reposData } = await axios.get(
-		`https://api.github.com/users/${username}/repos`
-	);
 
-	// extract all userData
+	// initial page number for querying
+	let page = 1;
+
+	// amount of repos per page when querying:
+	const itemsLimit = 30;
+
+	// array for keeping track of all fetched repos.
+	const reposFetched: Repo[] = [];
+
+	// while loop that will keep fetching from the API (one page at a time), until we are either getting 0 repos back or the amount of repos we get back is less than the itemsLimit.
+	while (true) {
+		const { data: reposData } = await axios.get(
+			`https://api.github.com/users/${username}/repos?page=${page}&per_page=${itemsLimit}`,
+			{
+				headers: {
+					Authorization: `Bearer ${process.env.API_ACCESS_TOKEN}`,
+				},
+			}
+		);
+
+		// push the fetched repos into our reposFetched array
+		reposFetched.push(...reposData);
+
+		// if we get an empty array back, or the length of the array is less than the itemsLimit
+		if (reposData.length === 0 || reposData.length < itemsLimit) {
+			break;
+		}
+		console.log('test');
+
+		// increment page for next fetch
+		page++;
+	}
+
+	console.log('length', reposFetched.length);
+	// Sanitizing our repos data, to only contain what we need - not sure if this is the best way to do it.. We are still fetching all data from each repo anyways.
+	const repos: Repo[] = reposFetched.map((repo: Repo) => {
+		// standard langauge color (if no langaugecolor was found)
+		let languageColor = '#8B949E';
+
+		// if there is a langauge, and there is a color for that languge from the JSON file we set the language color to the HEX value specified for that language in the JSON file.
+		if (repo.language && gitHubColorsObject[repo.language]?.color) {
+			languageColor = gitHubColorsObject[repo.language].color;
+		}
+
+		return {
+			id: repo.id,
+			name: repo.name,
+			html_url: repo.html_url,
+			description: repo.description,
+			updated_at: repo.updated_at,
+			language: repo.language,
+			forks_count: repo.forks_count,
+			visibility: repo.visibility,
+			fork: repo.fork,
+			forks_url: repo.forks_url,
+			languageColor,
+		};
+	});
+
+	// extract all relevant userData
 	const {
 		id,
 		name,
@@ -226,28 +243,6 @@ export const getServerSideProps: GetServerSideProps<{
 		public_repos,
 	} = userData;
 
-	// Sanitizing our repos data, to only contain what we need - not sure if this is the best way to do it.. We are still fetching all data from each repo anyways.
-	const repos: Repo[] = reposData.map((repo: Repo) => {
-		// standard langauge color (if no langaugecolor was found)
-		let languageColor = '#8B949E';
-
-		// if there is a langauge, we set the language color to the HEX value specified for that language in the JSON file.
-		if (repo.language) {
-			languageColor = gitHubColorsObject[repo.language].color;
-		}
-
-		return {
-			id: repo.id,
-			name: repo.name,
-			html_url: repo.html_url,
-			description: repo.description,
-			updated_at: repo.updated_at,
-			language: repo.language,
-			forks_count: repo.forks_count,
-			visibility: repo.visibility,
-			languageColor,
-		};
-	});
 	// TODO - sanitize repos, current how to do this, so they look like the interface?
 
 	const user: User = {
