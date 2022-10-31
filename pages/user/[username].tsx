@@ -91,10 +91,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 									{user.public_repos}
 								</span>
 							</div>
-							<Link
-								className="text-sm text-title hover:underline absolute right-8"
-								href={'/'}
-							>
+							<Link className="text-sm text-title hover:underline" href={'/'}>
 								Back to search
 							</Link>
 						</div>
