@@ -1,7 +1,10 @@
 import React from 'react';
 import { Repo } from '../../model';
 import { motion } from 'framer-motion';
+
+import { TbGitFork } from 'react-icons/tb';
 import { formatDistance, subDays } from 'date-fns';
+import { fork } from 'child_process';
 interface Props {
 	repo: Repo;
 	// index will be used if staggereffect is wanted.
@@ -36,7 +39,7 @@ const Repo: React.FC<Props> = ({ repo, index }) => {
 				</div>
 				{repo.description && <p className="text-sm mt-2">{repo.description}</p>}
 			</div>
-			<div className="flex items-center gap-6 text-xs font-thin">
+			<div className="flex items-center gap-3 text-xs font-thin">
 				{repo.language && (
 					<div className="flex items-center gap-1">
 						<div
@@ -47,7 +50,13 @@ const Repo: React.FC<Props> = ({ repo, index }) => {
 						<span className="">{repo.language}</span>
 					</div>
 				)}
-				{repo.fork && <div>hello</div>}
+				{repo.fork && (
+					<div>
+						<a href={repo.html_url} target="_blank" rel="noreferrer">
+							<TbGitFork className="text-xl cursor-pointer hover:text-title" />{' '}
+						</a>
+					</div>
+				)}
 				<span>Updated {updatedAt} ago</span>
 			</div>
 		</motion.li>

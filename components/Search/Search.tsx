@@ -33,36 +33,8 @@ const Search: React.FC = () => {
 
 	async function fetchUser(fetchURL: string): Promise<void> {
 		try {
-			// const users = await axios.get('/api/users', {
-			// 	params: {
-			// 		searchTerm,
-			// 	},
-			// });
-
-			// console.log(users.data);
-			// setUsers(users.data.items);
 			setIsLoading(true);
-			const res = await axios.get(fetchURL, {
-				// headers: {
-				// 	Accept: 'application/vnd.github+json',
-				// 	Authorization: `Bearer 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`,
-				// },
-			});
-			console.log(res.data);
-
-			const { id, name, login, avatar_url, url, html_url, repos_url } =
-				res.data;
-
-			console.log(res.data);
-
-			const userObj: UserSearchResult[] = [
-				{
-					login,
-					id,
-					avatar_url,
-				},
-			];
-
+			const res = await axios.get(fetchURL);
 			setUsers(res.data.items);
 			setIsLoading(false);
 			setErrorMessage(null);

@@ -161,10 +161,7 @@ export const getServerSideProps: GetServerSideProps<{
 		}
 	);
 
-	//fetching repos: by default it is fetching 30
-	// https://docs.github.com/en/rest/repos/repos#list-repositories-for-a-user
-
-	// initial page number for querying
+	// initial page number for querying repos
 	let page = 1;
 
 	// amount of repos per page when querying:

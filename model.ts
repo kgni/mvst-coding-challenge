@@ -36,7 +36,7 @@ export interface Repo {
 	forks_count: number;
 	visibility: string;
 	fork: boolean;
-	fork_url: string;
+	forks_url: string;
 	languageColor: string;
 }
 
