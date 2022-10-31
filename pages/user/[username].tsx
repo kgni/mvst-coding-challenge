@@ -89,9 +89,13 @@ const UserPage: React.FC<Props> = ({ user }) => {
 	}, [page]);
 
 	function onClickPreviousPage() {
+		// scroll to top when clicking on next/prev buttons
+		window.scrollTo({ top: 0, left: 0 });
 		setPage((prev) => prev - 1);
 	}
 	function onClickNextPage() {
+		// scroll to top when clicking on next/prev buttons
+		window.scrollTo({ top: 0, left: 0 });
 		setPage((prev) => prev + 1);
 	}
 
@@ -104,7 +108,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
 			<section className="bg-primary">
-				<div className="h-screen w-full max-w-5xl flex gap-16 py-16 px-8  mx-auto text-text overflow-hidden md:flex-col md:gap-0 md:min-h-screen md:h-full">
+				<div className="h-screen w-full max-w-5xl flex gap-16 py-16 px-8 md:py-8  mx-auto text-text overflow-hidden md:flex-col md:gap-0 md:min-h-screen md:h-full">
 					<UserAside user={user} />
 
 					{/* using flex and flex-col to make container take up the remaining height */}

@@ -7,7 +7,7 @@ interface Props {
 
 const ReposList: React.FC<Props> = ({ repos }) => {
 	return (
-		<ul className="mb-7 pr-3">
+		<ul className="mb-7 pr-3 md:mb-0 md:pr-0">
 			{repos.map((repo, index) => (
 				<Repo key={repo.id} repo={repo} index={index} />
 			))}

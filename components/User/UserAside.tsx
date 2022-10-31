@@ -18,9 +18,9 @@ const UserAside: React.FC<Props> = ({ user }) => {
 	const isMobile = useMediaQuery('(max-width: 628px)');
 
 	return (
-		<aside className="w-1/3 md:w-full md:flex md:gap-12 items-center justify-center md:mb-12 sm:flex-col sm:gap-4">
+		<aside className="w-1/3 md:w-full md:flex md:gap-12 items-center justify-center md:mb-8 sm:mb-2 sm:flex-col sm:gap-0">
 			<Image
-				className="rounded-full md:max-w-[50%] sm:w-full sm:mb-0 sm:max-w-[250px]"
+				className="rounded-full md:max-w-[50%] mb-4 sm:w-full sm:mb-2 sm:max-w-[200px]"
 				src={user.avatar_url}
 				alt="avatar"
 				width={288}

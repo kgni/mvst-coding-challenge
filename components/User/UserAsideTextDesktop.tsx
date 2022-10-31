@@ -43,7 +43,7 @@ const UserAsideTextDesktop: React.FC<Props> = ({ user }) => {
 					<div className="flex items-center gap-2">
 						<IoIosLink className="text-lg" />
 						<a
-							href="https://www.mdia.dk/"
+							href={user.blog}
 							target="_blank"
 							rel="noreferrer"
 							className="hover:text-title"
