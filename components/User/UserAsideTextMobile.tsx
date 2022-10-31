@@ -15,7 +15,7 @@ const UserAsideTextMobile: React.FC<Props> = ({ user }) => {
 			<div className="mb-2 gap-8 items-center">
 				<div className="flex items-end justify-center gap-2 mb-2">
 					{user.name && <h3 className="text-btnText text-xl">{user.name}</h3>}
-					<p> - {user.login}</p>
+					<p>{user.login}</p>
 				</div>
 				<div className="text-btnText font-light tracking-wide flex flex-col text-sm">
 					<div className="flex justify-center items-center gap-2 mb-2">
@@ -44,10 +44,7 @@ const UserAsideTextMobile: React.FC<Props> = ({ user }) => {
 						)}
 					</div>
 					{user.location && (
-						<div className="flex items-center justify-center gap-2">
-							<IoLocationOutline className="text-lg" />
-							{user.location}
-						</div>
+						<div className="flex justify-center">{user.location}</div>
 					)}
 				</div>
 			</div>
