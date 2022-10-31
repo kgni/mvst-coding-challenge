@@ -3,6 +3,7 @@ import { GetServerSideProps } from 'next';
 import { Repo, User } from '../../model';
 import axios from 'axios';
 import { Oval } from 'react-loader-spinner';
+import Head from 'next/head';
 
 import { BiBookBookmark } from 'react-icons/bi';
 
@@ -93,67 +94,74 @@ const UserPage: React.FC<Props> = ({ user }) => {
 	}
 
 	return (
-		<section className="min-h-screen bg-primary">
-			<div className="w-full max-w-5xl py-16 px-8  mx-auto text-text flex gap-16">
-				<UserAside user={user} />
+		<>
+			<Head>
+				<title>
+					{user.login} {user.name && `(${user.name})`}
+				</title>
+				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+			</Head>
+			<section className="bg-primary">
+				<div className="h-screen w-full max-w-5xl py-16 px-8  mx-auto text-text flex gap-16 overflow-hidden">
+					<UserAside user={user} />
 
-				<main className="w-2/3">
-					{/* TODO - create tabs */}
-					<div className="flex mb-4">
-						<div className="flex items-center border-b-accent border-b-[1px] pb-2 gap-2">
-							<BiBookBookmark />
-							<p className="text-btnText">Repositories</p>
-							<span className="text-btnText bg-btnPrimary inline-block p-1 px-2 rounded-full text-xs">
-								{user.public_repos}
-							</span>
-						</div>
-					</div>
-					<section className="border-b-[1px] border-btnBorder pb-2">
-						<form className="flex items-center gap-2 mb-2">
-							<SearchBar
-								className="px-2 py-1 grow bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnText  text-btnText  duration-75"
-								type="input"
-								value={searchTerm}
-								onChange={setSearchTerm}
-								placeholder="Find a repository..."
-							/>
-							{/* TODO - fix this so button and search bar are same height */}
-							<Button className="px-4 py-[4px]">Search</Button>
-						</form>
-					</section>
-					<section>
-						{isLoading && (
-							<div className="flex justify-center mt-6">
-								<Oval
-									width={30}
-									height={30}
-									color="white"
-									secondaryColor="whte"
-									strokeWidth={2}
-								/>
+					<main className="w-2/3 flex flex-col grow">
+						{/* TODO - create tabs */}
+						<div className="flex mb-4">
+							<div className="flex items-center border-b-accent border-b-[1px] pb-2 gap-2">
+								<BiBookBookmark />
+								<p className="text-btnText">Repositories</p>
+								<span className="text-btnText bg-btnPrimary inline-block p-1 px-2 rounded-full text-xs">
+									{user.public_repos}
+								</span>
 							</div>
-						)}
-						{repos && !isLoading && (
-							<>
-								<ReposList repos={repos} />
-								{reposLength > 0 ? (
-									<NextPrev
-										page={page}
-										items={reposLength}
-										onClickPreviousPage={onClickPreviousPage}
-										onClickNextPage={onClickNextPage}
+						</div>
+						<section className="pb-2">
+							<form className="flex items-center gap-2 mb-4 ">
+								<SearchBar
+									className="px-2 py-1 grow bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnText  text-btnText  duration-75"
+									type="input"
+									value={searchTerm}
+									onChange={setSearchTerm}
+									placeholder="Find a repository..."
+								/>
+								{/* TODO - fix this so button and search bar are same height */}
+								<Button className="px-4 py-[4px]">Search</Button>
+							</form>
+							<div className="w-full bg-btnBorder pr-2 h-[1px] mb-1"></div>
+						</section>
+						<section className="overflow-auto mb-8">
+							{isLoading && (
+								<div className="flex justify-center mt-6">
+									<Oval
+										width={30}
+										height={30}
+										color="white"
+										secondaryColor="whte"
+										strokeWidth={2}
 									/>
-								) : (
-									<p>{user.login} has no public repositories...</p>
-								)}
-							</>
+								</div>
+							)}
+							{repos && !isLoading && <ReposList repos={repos} />}
+						</section>
+						{reposLength > 0 && !isLoading && (
+							<NextPrev
+								page={page}
+								items={reposLength}
+								onClickPreviousPage={onClickPreviousPage}
+								onClickNextPage={onClickNextPage}
+							/>
 						)}
-					</section>
-					{/* create searchbar with sorting functionality */}
-					{/* create list of repos - fill star when clicking*/}
-				</main>
-			</div>
-		</section>
+
+						{reposLength === 0 && (
+							<p>{user.login} has no public repositories...</p>
+						)}
+						{/* create searchbar with sorting functionality */}
+						{/* create list of repos - fill star when clicking*/}
+					</main>
+				</div>
+			</section>
+		</>
 	);
 };
 

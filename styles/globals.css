@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* general scrollbar (chrome) */
+
+::-webkit-scrollbar-track {
+	border-radius: 10px;
+
+	background-color: #161d28;
+	border-radius: 10px;
+}
+::-webkit-scrollbar {
+	width: 5px;
+	background-color: transparent;
+	padding-right: 20px;
+}
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: #c9d1d9;
+	position: absolute;
+	padding-right: 20px;
+}

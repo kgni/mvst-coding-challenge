@@ -22,12 +22,8 @@ export interface User {
 
 export interface UserSearchResult {
 	id: number;
-	name: string;
 	login: string;
 	avatar_url: string;
-	url: string;
-	html_url: string;
-	repos_url: string;
 }
 
 export interface Repo {

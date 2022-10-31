@@ -19,10 +19,10 @@ interface Props {
 const SearchResultsUserDropDown: React.FC<Props> = ({ users }) => {
 	return (
 		<>
-			{users && (
+			{users.length > 0 && (
 				<motion.ul
 					{...dropdownAnimation}
-					className="w-full bg-white rounded-md mb-4"
+					className="w-full bg-white rounded-md mt-2 mb-4 max-h-96 overflow-auto"
 				>
 					{users.map((user, index) => (
 						<Link key={user.id} href={`/user/${user.login}`}>
@@ -45,7 +45,7 @@ const SearchResultsUserDropDown: React.FC<Props> = ({ users }) => {
 										height={64}
 									/>
 									<div className="flex flex-col items-start">
-										<h3 className="font-bold">{user.name}</h3>
+										{/* <h3 className="font-bold">{user.name}</h3> */}
 										<p className="text-sm"> {user.login}</p>
 									</div>
 								</div>

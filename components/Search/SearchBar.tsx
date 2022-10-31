@@ -54,8 +54,10 @@ const SearchBar: React.FC<Props> = ({
 	return (
 		<div className="flex grow mx-auto items-center relative">
 			<input
+				tabIndex={1}
 				type={type}
 				id={id}
+				value={value}
 				className={className}
 				onFocus={onFocusSetPlaceholder}
 				onBlur={onBlurSetPlaceholder}

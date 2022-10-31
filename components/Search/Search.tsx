@@ -19,15 +19,15 @@ const Search: React.FC = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState<string | null>('');
 	const [users, setUsers] = useState<UserSearchResult[]>([]);
-	const url = `https://api.github.com/users/${searchTerm}`;
+	const url = `https://api.github.com/search/users?q=${searchTerm}`;
 
 	// fetch user
 	/* 
-	Currently we are just fetching one user, and we are doing it onclick.
+	Currently we are just fetching users onclick.
 	The reason why we are doing it onClick, instead of onChange, is because we are limited to the amount of API calls we can do to the GitHub API.
 	https://docs.github.com/en/rest/overview/resources-in-the-rest-api#rate-limiting
 
-	For a better UX, we could have made the search onChange, with a debounced function that would ensure that we would only do a query once the user had finished typing (more or less). For now we are just sticking to a button
+	For a better UX, we could have made the search onChange, with a debounced function that would ensure that we would only do a query once the user had finished typing (more or less). For now we are just sticking to a button.
 
 	*/
 
@@ -38,19 +38,17 @@ const Search: React.FC = () => {
 			const { id, name, login, avatar_url, url, html_url, repos_url } =
 				res.data;
 
+			console.log(res.data);
+
 			const userObj: UserSearchResult[] = [
 				{
-					id,
-					name,
 					login,
+					id,
 					avatar_url,
-					url,
-					html_url,
-					repos_url,
 				},
 			];
 
-			setUsers(userObj);
+			setUsers(res.data.items);
 			setIsLoading(false);
 			setErrorMessage(null);
 		} catch (err) {
@@ -93,13 +91,13 @@ const Search: React.FC = () => {
 								status="error"
 								onClose={setErrorFalse}
 								errorMessage={errorMessage}
-								className="text-white"
+								className="text-white mt-2"
 							/>
 						)}
 						{users && <SearchResultsUserDropDown users={users} />}
 					</AnimatePresence>
 					{/* TODO - Move this inside Searchbar inside the form (give better name to SearchBar) */}
-					<Button isLoading={isLoading} className="w-full">
+					<Button isLoading={isLoading} className="w-full mt-2">
 						Find User
 					</Button>
 				</form>
