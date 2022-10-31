@@ -8,6 +8,7 @@ import Image from 'next/image';
 import useMediaQuery from '../../hooks/useMediaQuery';
 
 import UserAsideTextDesktop from './UserAsideTextDesktop';
+import UserAsideTextMobile from './UserAsideTextMobile';
 
 interface Props {
 	user: User;
@@ -26,7 +27,7 @@ const UserAside: React.FC<Props> = ({ user }) => {
 				height={288}
 			/>
 			{!isMobile && <UserAsideTextDesktop user={user} />}
-			{isMobile && <p>This is mobile</p>}
+			{isMobile && <UserAsideTextMobile user={user} />}
 
 			<div className="w-full h-[1px] bg-btnPrimary md:hidden"></div>
 		</aside>
