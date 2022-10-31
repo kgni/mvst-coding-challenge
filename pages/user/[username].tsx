@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { GetServerSideProps } from 'next';
 import { Repo, User } from '../../model';
 import axios from 'axios';
@@ -18,7 +18,7 @@ import gitHubColors from '../../data/gitHubColors.json' assert { type: 'JSON' };
 import NextPrev from '../../components/UI/Pagination/NextPrev';
 import Button from '../../components/UI/Button';
 import Link from 'next/link';
-import scrollTo from '../../helpers/scrollTo';
+import { scrollToWindow } from '../../helpers/scrollTo';
 
 interface Props {
 	user: User;
@@ -36,17 +36,28 @@ const UserPage: React.FC<Props> = ({ user }) => {
 
 	// getting repos length, this will be used to determine if we can continue to go to a new page.
 	const reposLength = repos.length;
+	// calculate the total amount of pages (30 items per page)
+	const itemsLimit = 30;
+	const totalPages = Math.ceil(reposLength / itemsLimit);
 
-	console.log(reposLength);
+	const filteredRepos = repos.filter(
+		(repo) =>
+			repo.name.includes(searchTerm) || repo.description?.includes(searchTerm)
+	);
+
+	// targeting repoListContainer so we can scroll to the top when clicking next, and previous buttons
+	const repoListContainer = useRef<HTMLInputElement>(null);
 
 	function onClickPreviousPage() {
 		// scroll to top when clicking on next/prev buttons
-		scrollTo(0, 0);
+		scrollToWindow(0, 0);
+		repoListContainer.current?.scrollTo(0, 0);
 		setPage((prev) => prev - 1);
 	}
 	function onClickNextPage() {
 		// scroll to top when clicking on next/prev buttons
-		scrollTo(0, 0);
+		scrollToWindow(0, 0);
+		repoListContainer.current?.scrollTo(0, 0);
 		setPage((prev) => prev + 1);
 	}
 
@@ -93,6 +104,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 									className="px-2 py-1 grow bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnText  text-btnText  duration-75"
 									type="input"
 									value={searchTerm}
+									setPage={setPage}
 									onChange={setSearchTerm}
 									placeholder="Find a repository..."
 								/>
@@ -102,7 +114,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 							<div className="w-full bg-btnBorder pr-2 h-[1px] mb-1"></div>
 						</section>
 						{/* overflow to make repolist section scrollable, instead of the entire screen being scrollable */}
-						<section className="overflow-auto mb-8">
+						<section ref={repoListContainer} className="overflow-auto">
 							{isLoading && (
 								<div className="flex justify-center mt-6">
 									<Oval
@@ -114,20 +126,26 @@ const UserPage: React.FC<Props> = ({ user }) => {
 									/>
 								</div>
 							)}
-							{repos && !isLoading && <ReposList repos={repos} />}
+							{repos && !isLoading && (
+								<ReposList
+									repos={filteredRepos}
+									page={page}
+									itemsLimit={itemsLimit}
+								/>
+							)}
 						</section>
-						{reposLength > 0 && !isLoading && (
+						{filteredRepos.length > 0 && !isLoading && (
 							<NextPrev
 								page={page}
-								items={reposLength}
+								totalPages={totalPages}
+								itemsLength={filteredRepos.length}
 								onClickPreviousPage={onClickPreviousPage}
 								onClickNextPage={onClickNextPage}
 							/>
 						)}
 
-						{reposLength === 0 && (
-							<p>{user.login} has no public repositories...</p>
-						)}
+						{filteredRepos.length === 0 && <p>No repositories found...</p>}
+
 						{/* create searchbar with sorting functionality */}
 						{/* create list of repos - fill star when clicking*/}
 					</main>

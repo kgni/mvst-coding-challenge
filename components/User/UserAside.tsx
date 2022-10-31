@@ -8,8 +8,9 @@ import UserAsideTextDesktop from './UserAsideTextDesktop';
 import UserAsideTextMobile from './UserAsideTextMobile';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import UserTopBarMobile from './UserTopBarMobile';
-import scrollTo from '../../helpers/scrollTo';
+// import scrollTo from '../../helpers/scrollTo';
 import { AnimatePresence } from 'framer-motion';
+import { scrollToWindow } from '../../helpers/scrollTo';
 
 interface Props {
 	user: User;
@@ -44,7 +45,7 @@ const UserAside: React.FC<Props> = ({ user }) => {
 							<UserTopBarMobile
 								isOpen={isTopBarOpen}
 								setIsOpen={setIsTopBarOpen}
-								onClick={() => scrollTo(0, 0, 'smooth')}
+								onClick={() => scrollToWindow(0, 0, 'smooth')}
 								user={user}
 								closeButton={true}
 							/>

@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 
 import { TbGitFork } from 'react-icons/tb';
 import { formatDistance, subDays } from 'date-fns';
-import { fork } from 'child_process';
 interface Props {
 	repo: Repo;
 	// index will be used if staggereffect is wanted.
@@ -21,7 +20,6 @@ const Repo: React.FC<Props> = ({ repo, index }) => {
 		<motion.li
 			initial={{ opacity: 0 }}
 			animate={{ opacity: 1 }}
-			transition={{ delay: index ? 0.02 * index : 0 }}
 			className="border-b-[1px] border-btnBorder py-8"
 		>
 			<div className="mb-4">

@@ -9,6 +9,7 @@ interface Props {
 	className?: string;
 	value: string;
 	placeholder: string;
+	setPage?: (num: number) => void;
 	onChange: (val: string) => void;
 }
 const SearchBar: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const SearchBar: React.FC<Props> = ({
 	className,
 	value,
 	placeholder,
+	setPage,
 	onChange,
 }) => {
 	const [placeholderState, setPlaceholderState] = useState(placeholder);
@@ -48,6 +50,7 @@ const SearchBar: React.FC<Props> = ({
 	}
 
 	function onChangeSetValue(e: ChangeEvent<HTMLInputElement>) {
+		setPage?.(1);
 		onChange(e.target.value);
 	}
 
