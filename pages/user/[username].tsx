@@ -18,7 +18,7 @@ import gitHubColors from '../../data/gitHubColors.json' assert { type: 'JSON' };
 import NextPrev from '../../components/UI/Pagination/NextPrev';
 import Button from '../../components/UI/Button';
 import Link from 'next/link';
-import { AiOutlineRollback } from 'react-icons/ai';
+import scrollTo from '../../helpers/scrollTo';
 
 interface Props {
 	user: User;
@@ -33,6 +33,9 @@ const UserPage: React.FC<Props> = ({ user }) => {
 	const [repos, setRepos] = useState<Repo[]>(user.repos);
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
+
+	// used to get the value for the y-scroll position, this is used to show a fixed element of go to top when we are scrolling past a certain point.
+
 	// not exactly sure how to import this JSON file, but this works for now.
 	// We are going to use this object, to match the language we got back from each repo.
 	// This color will be set in a variable, and used in each Repo list item.
@@ -91,12 +94,12 @@ const UserPage: React.FC<Props> = ({ user }) => {
 
 	function onClickPreviousPage() {
 		// scroll to top when clicking on next/prev buttons
-		window.scrollTo({ top: 0, left: 0 });
+		scrollTo(0, 0);
 		setPage((prev) => prev - 1);
 	}
 	function onClickNextPage() {
 		// scroll to top when clicking on next/prev buttons
-		window.scrollTo({ top: 0, left: 0 });
+		scrollTo(0, 0);
 		setPage((prev) => prev + 1);
 	}
 
@@ -115,7 +118,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 					{/* using flex and flex-col to make container take up the remaining height */}
 					<main className="w-2/3 flex flex-col md:w-full">
 						{/* TODO - create tabs */}
-						<div className="flex mb-4 items-start justify-between sm:items-center">
+						<div className="flex mb-4 items-center justify-between">
 							<div className="flex items-center border-b-accent border-b-[1px] pb-2 gap-2">
 								<BiBookBookmark />
 								<p className="text-btnText">Repositories</p>

@@ -8,7 +8,7 @@ const dropdownAnimation = {
 	key: 'dropdown',
 	initial: { opacity: 0 },
 	animate: { opacity: 1 },
-	transition: { duration: 0.1, staggerChildren: 1 },
+	transition: { duration: 0.1 },
 	exit: { opacity: 0, transition: { duration: 0.1 } },
 };
 
@@ -34,7 +34,7 @@ const SearchResultsUserDropDown: React.FC<Props> = ({ users }) => {
 									ease: 'easeOut',
 								}}
 								animate={{ opacity: 1, translateY: 0 }}
-								className="px-6 py-3 hover:bg-gray-200 cursor-pointer duration-100 first:rounded-t-md last:rounded-b-md border-b-[1px] last:border-b-transparent"
+								className="px-6 py-3 hover:bg-gray-200 cursor-pointer duration-100 first:rounded-t-md last:rounded-b-md border-b-[1px] last:border-b-transparent md:hover:bg-transparent md:active:bg-gray-200"
 							>
 								<div className="flex items-center gap-4">
 									<Image
