@@ -26,7 +26,7 @@ const UserTopBarMobile: React.FC<Props> = ({
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ duration: 0.5 }}
-					className="bg-white fixed top-2 p-6 rounded-md w-[95%] left-[50%] !translate-x-[-50%] flex items-center justify-between z-50"
+					className="bg-white fixed top-2 py-3 pr-8 px-6 rounded-md w-[95%] left-[50%] !translate-x-[-50%] flex items-center justify-between z-50"
 					exit={{ opacity: 0, transition: { duration: 0.3 } }}
 				>
 					<div className="flex items-center gap-4">
