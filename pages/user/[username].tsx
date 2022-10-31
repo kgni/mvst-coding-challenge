@@ -105,7 +105,8 @@ const UserPage: React.FC<Props> = ({ user }) => {
 				<div className="h-screen w-full max-w-5xl py-16 px-8  mx-auto text-text flex gap-16 overflow-hidden">
 					<UserAside user={user} />
 
-					<main className="w-2/3 flex flex-col grow">
+					{/* using flex and flex-col to make container take up the remaining height */}
+					<main className="w-2/3 flex flex-col">
 						{/* TODO - create tabs */}
 						<div className="flex mb-4">
 							<div className="flex items-center border-b-accent border-b-[1px] pb-2 gap-2">
@@ -130,6 +131,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 							</form>
 							<div className="w-full bg-btnBorder pr-2 h-[1px] mb-1"></div>
 						</section>
+						{/* overflow to make repolist section scrollable, instead of the entire screen being scrollable */}
 						<section className="overflow-auto mb-8">
 							{isLoading && (
 								<div className="flex justify-center mt-6">
