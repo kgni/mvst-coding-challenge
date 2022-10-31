@@ -104,11 +104,11 @@ const UserPage: React.FC<Props> = ({ user }) => {
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
 			<section className="bg-primary">
-				<div className="h-screen w-full max-w-5xl py-16 px-8  mx-auto text-text flex gap-16 overflow-hidden">
+				<div className="h-screen w-full max-w-5xl flex gap-16 py-16 px-8  mx-auto text-text overflow-hidden md:flex-col md:gap-0 md:min-h-screen md:h-full">
 					<UserAside user={user} />
 
 					{/* using flex and flex-col to make container take up the remaining height */}
-					<main className="w-2/3 flex flex-col">
+					<main className="w-2/3 flex flex-col md:w-full">
 						{/* TODO - create tabs */}
 						<div className="flex mb-4 items-start justify-between">
 							<div className="flex items-center border-b-accent border-b-[1px] pb-2 gap-2">
