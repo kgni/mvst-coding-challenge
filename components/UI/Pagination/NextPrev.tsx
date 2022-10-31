@@ -19,7 +19,7 @@ const NextPrev: React.FC<Props> = ({
 	// if page is 1, then don't allow to click previous
 	return (
 		// if page is 1, then don't allow to click previous
-		<div className="flex items-center gap-8 justify-center">
+		<div className="flex items-center gap-4 justify-center">
 			{page > 1 ? (
 				<button
 					onClick={onClickPreviousPage}

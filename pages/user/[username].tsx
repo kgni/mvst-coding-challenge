@@ -17,6 +17,8 @@ import ReposList from '../../components/Repos/ReposList';
 import gitHubColors from '../../data/gitHubColors.json' assert { type: 'JSON' };
 import NextPrev from '../../components/UI/Pagination/NextPrev';
 import Button from '../../components/UI/Button';
+import Link from 'next/link';
+import { AiOutlineRollback } from 'react-icons/ai';
 
 interface Props {
 	user: User;
@@ -108,7 +110,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 					{/* using flex and flex-col to make container take up the remaining height */}
 					<main className="w-2/3 flex flex-col">
 						{/* TODO - create tabs */}
-						<div className="flex mb-4">
+						<div className="flex mb-4 items-start justify-between">
 							<div className="flex items-center border-b-accent border-b-[1px] pb-2 gap-2">
 								<BiBookBookmark />
 								<p className="text-btnText">Repositories</p>
@@ -116,6 +118,9 @@ const UserPage: React.FC<Props> = ({ user }) => {
 									{user.public_repos}
 								</span>
 							</div>
+							<Link className="text-sm text-title hover:underline" href={'/'}>
+								Back to search
+							</Link>
 						</div>
 						<section className="pb-2">
 							<form className="flex items-center gap-2 mb-4 ">
@@ -129,6 +134,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 								{/* TODO - fix this so button and search bar are same height */}
 								<Button className="px-4 py-[4px]">Search</Button>
 							</form>
+							{/* divider */}
 							<div className="w-full bg-btnBorder pr-2 h-[1px] mb-1"></div>
 						</section>
 						{/* overflow to make repolist section scrollable, instead of the entire screen being scrollable */}
