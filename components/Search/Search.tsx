@@ -10,6 +10,7 @@ import Toast from '../UI/Toast';
 
 // Models
 import { UserSearchResult } from '../../model';
+import Footer from '../Footer';
 
 // TODO - ADD GITHUB AUTH FOR MORE API CALLS AN HOUR
 // Is this just a token in the request header?
@@ -63,7 +64,7 @@ const Search: React.FC = () => {
 	return (
 		// error in console, because setSearchTerm is not an input attribute. How do we keep making SearchBar dynamic, and still pass down the setSearchTerm function so we can generate state from that?
 
-		<section className="pt-48">
+		<section className="pt-48 searchPage">
 			<div className="max-w-full w-96 mx-auto">
 				<form onSubmit={onSubmitSearchUser}>
 					<SearchBar
@@ -93,6 +94,7 @@ const Search: React.FC = () => {
 					</Button>
 				</form>
 			</div>
+			<Footer />
 		</section>
 	);
 };

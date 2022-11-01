@@ -19,6 +19,7 @@ import NextPrev from '../../components/UI/Pagination/NextPrev';
 import Button from '../../components/UI/Button';
 import Link from 'next/link';
 import { scrollToWindow } from '../../helpers/scrollTo';
+import Footer from '../../components/Footer';
 
 interface Props {
 	user: User;
@@ -133,7 +134,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 						</section>
 						{filteredRepos.length > 0 &&
 							!isLoading &&
-							user.public_repos > 30 && (
+							user.public_repos > itemsLimit && (
 								<NextPrev
 									page={page}
 									totalPages={totalPages}

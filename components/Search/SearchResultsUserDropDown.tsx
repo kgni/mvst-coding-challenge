@@ -22,7 +22,7 @@ const SearchResultsUserDropDown: React.FC<Props> = ({ users }) => {
 			{users.length > 0 && (
 				<motion.ul
 					{...dropdownAnimation}
-					className="w-full bg-white rounded-md mt-2 mb-4 max-h-96 sm:max-h-64 overflow-auto"
+					className="w-full bg-white rounded-md mt-2 mb-4 max-h-96 sm:max-h-64 overflow-auto searchPageScrollBar"
 				>
 					{users.map((user, index) => (
 						<Link key={user.id} href={`/user/${user.login}`}>
