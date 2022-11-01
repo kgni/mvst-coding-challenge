@@ -1,5 +1,7 @@
 import { Repo } from '../model';
 
+// filtering function for filtering repos based on different criterias.
+
 export default function applyRepoFilters(
 	repos: Repo[],
 	searchTerm: string,

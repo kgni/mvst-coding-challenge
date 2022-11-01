@@ -7,11 +7,3 @@ export function scrollToWindow(
 ) {
 	window.scrollTo({ top, left, behavior });
 }
-
-export function scrollTo(
-	top: number,
-	left: number,
-	behavior: ScrollBehavior = 'auto'
-) {
-	window.scrollTo({ top, left, behavior });
-}

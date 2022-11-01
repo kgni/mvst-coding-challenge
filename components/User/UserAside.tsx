@@ -8,8 +8,6 @@ import UserAsideTextDesktop from './UserAsideTextDesktop';
 import UserAsideTextMobile from './UserAsideTextMobile';
 import useScrollPosition from '../../hooks/useScrollPosition';
 import UserTopBarMobile from './UserTopBarMobile';
-// import scrollTo from '../../helpers/scrollTo';
-import { AnimatePresence } from 'framer-motion';
 import { scrollToWindow } from '../../helpers/scrollTo';
 
 interface Props {
@@ -17,8 +15,13 @@ interface Props {
 }
 
 const UserAside: React.FC<Props> = ({ user }) => {
-	const isSmallMobile = useMediaQuery('(max-width: 628px)');
+	// media query hooks, that returns a boolean depending on viewport
+
+	// returns true when viewport width is between 628px and 768px
 	const isMediumMobile = useMediaQuery('(max-width: 768px)');
+
+	// returns true when viewport width is under 628px
+	const isSmallMobile = useMediaQuery('(max-width: 628px)');
 
 	// getting scrollposition to decide when to show fixed UserTopBar
 	const scrollPosition = useScrollPosition();
@@ -40,7 +43,6 @@ const UserAside: React.FC<Props> = ({ user }) => {
 			{/* On medium mobile devices and below, we want to render a topbar on scroll */}
 			{isMediumMobile && (
 				<>
-					{/* <AnimatePresence> */}
 					{scrollPosition > 600 && (
 						<UserTopBarMobile
 							isOpen={isTopBarOpen}
@@ -50,7 +52,6 @@ const UserAside: React.FC<Props> = ({ user }) => {
 							closeButton={true}
 						/>
 					)}
-					{/* </AnimatePresence> */}
 				</>
 			)}
 

@@ -32,7 +32,6 @@ const UserPage: React.FC<Props> = ({ user }) => {
 	const [page, setPage] = useState(1);
 	const [repos, setRepos] = useState<Repo[]>(user.repos);
 	const [isLoading, setIsLoading] = useState(false);
-	const [errorMessage, setErrorMessage] = useState('');
 
 	// sorting/searching criteria states:
 	const [searchTerm, setSearchTerm] = useState('');
@@ -140,6 +139,8 @@ const UserPage: React.FC<Props> = ({ user }) => {
 								/>
 							)}
 						</section>
+
+						{/* deciding wether to show pagination buttons or not */}
 						{filteredRepos.length > 0 &&
 							!isLoading &&
 							user.public_repos > itemsLimit && (
@@ -205,8 +206,6 @@ export const getServerSideProps: GetServerSideProps<{
 				)
 			).json();
 
-			console.log(reposData);
-
 			// push the fetched repos into our reposFetched array
 			reposFetched.push(...reposData);
 
@@ -218,15 +217,12 @@ export const getServerSideProps: GetServerSideProps<{
 			// increment page for next fetch
 			page++;
 		} catch (e) {
-			// console.log(e);
 			// if an error ocurred return a 404 page
 			return {
 				notFound: true,
 			};
 		}
 	}
-
-	console.log('length', reposFetched.length);
 
 	// Sanitizing our repos data, to only contain what we need - not sure if this is the best way to do it.. We are still fetching all data from each repo anyways, we are just not working with huge objects on the frontend.
 	const repos: Repo[] = reposFetched.map((repo: Repo) => {
@@ -253,27 +249,7 @@ export const getServerSideProps: GetServerSideProps<{
 		};
 	});
 
-	// extract all relevant userData
-	// const {
-	// 	id,
-	// 	name,
-	// 	login,
-	// 	bio,
-	// 	avatar_url,
-	// 	url,
-	// 	html_url,
-	// 	repos_url,
-	// 	followers,
-	// 	following,
-	// 	company,
-	// 	blog,
-	// 	location,
-	// 	email,
-	// 	twitter_username,
-	// 	public_repos,
-	// } = userData;
-
-	// 1 single user object, containing all the sanizited repos as well.
+	// 1 single user object with the relevant data, containing all the sanizited repos as well.
 	const user: User = {
 		id: userData.id,
 		name: userData.name,
@@ -293,8 +269,6 @@ export const getServerSideProps: GetServerSideProps<{
 		public_repos: userData.public_repos,
 		repos,
 	};
-
-	// With notFound: true, the page will return a 404 even if there was a successfully generated page before.
 
 	return {
 		props: {

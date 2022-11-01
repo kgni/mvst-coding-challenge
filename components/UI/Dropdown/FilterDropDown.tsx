@@ -9,12 +9,12 @@ interface Props {
 	filterFunc: any;
 }
 
+// component for displayed and selecting filter criterias
 const FilterDropDown: React.FC<Props> = ({
 	subtitle,
 	selected,
 	options,
 	filterFunc,
-	setIsOpen,
 }) => {
 	return (
 		<>
@@ -23,10 +23,7 @@ const FilterDropDown: React.FC<Props> = ({
 				<div className="h-[1px] bg-btnBorder mx-4 mb-2"></div>
 				<ul className="flex flex-col gap-1 relative">
 					{options.map((option: string) => (
-						// not sure about how I'm handling this TypeScript error:
-						// We are basically looking at
-						// not sure how to pass around events yet.. it works, but I can't seem to remove this error. ignoring it for now so we can deploy to vercel
-
+						// not sure how to work with typed events yet.. it works, but I can't seem to remove this error. ignoring it for now so we can deploy to vercel
 						<li
 							// @ts-ignore
 							onClick={(e) => filterFunc(e.target.innerText)}

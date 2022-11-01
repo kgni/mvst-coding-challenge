@@ -1,9 +1,13 @@
 import React from 'react';
+
+// models
+import { User } from '../../model';
+
+// components:
 import { AiOutlineTwitter } from 'react-icons/ai';
 import { FiUsers } from 'react-icons/fi';
 import { IoIosLink } from 'react-icons/io';
 import { IoLocationOutline } from 'react-icons/io5';
-import { User } from '../../model';
 
 interface Props {
 	user: User;
@@ -16,11 +20,7 @@ const UserAsideTextDesktop: React.FC<Props> = ({ user }) => {
 				{user.name && <h3 className="text-btnText text-2xl">{user.name}</h3>}
 				<p>{user.login}</p>
 			</div>
-			{user.bio && <p className="text-btnText mb-6">{user.bio}</p>}
-
-			{/* <button className="bg-btnPrimary w-full rounded-md border-[1px] border-btnBorder text-sm py-1 text-btnText mb-4 hover:bg-btnHover hover:border-btnBorderHover duration-75 font-light tracking-wide">
-  Edit profile
-</button> */}
+			{user.bio && <p className="text-btnText mb-4">{user.bio}</p>}
 
 			<div className="flex items-center gap-1 text-sm mb-4">
 				<div className=" flex items-center">

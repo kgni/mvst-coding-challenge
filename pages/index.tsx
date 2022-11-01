@@ -6,6 +6,7 @@ export default function Home() {
 		<>
 			<Head>
 				<title>MVST - GITHUB</title>
+
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
 			<main className="h-screen text-center bg-primary px-4">

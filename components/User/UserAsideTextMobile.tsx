@@ -1,9 +1,12 @@
 import React from 'react';
+
+// models
+import { User } from '../../model';
+
+// components
 import { AiOutlineTwitter } from 'react-icons/ai';
 import { FaGlobeEurope } from 'react-icons/fa';
 import { FiUsers } from 'react-icons/fi';
-import { IoLocationOutline } from 'react-icons/io5';
-import { User } from '../../model';
 
 interface Props {
 	user: User;
@@ -48,14 +51,6 @@ const UserAsideTextMobile: React.FC<Props> = ({ user }) => {
 					)}
 				</div>
 			</div>
-			{/* {user.bio && (
-				<p className="text-btnText mb-2 center text-sm">{user.bio}</p>
-			)} */}
-
-			{/* <button className="bg-btnPrimary w-full rounded-md border-[1px] border-btnBorder text-sm py-1 text-btnText mb-4 hover:bg-btnHover hover:border-btnBorderHover duration-75 font-light tracking-wide">
-  Edit profile
-</button> */}
-
 			<div className="flex items-center justify-center gap-1 text-sm">
 				<div className=" flex items-center">
 					<FiUsers className="mr-2" />

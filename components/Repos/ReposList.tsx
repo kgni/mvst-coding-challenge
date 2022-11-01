@@ -12,6 +12,7 @@ const ReposList: React.FC<Props> = ({ repos, page, itemsLimit }) => {
 		<ul className="pr-3 md:mb-0 md:pr-0 repoList">
 			{repos
 				.map((repo, index) => <Repo key={repo.id} repo={repo} index={index} />)
+				// paginating repos by itemsLimit per page.
 				.slice((page - 1) * itemsLimit, page * itemsLimit)}
 		</ul>
 	);
