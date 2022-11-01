@@ -37,7 +37,11 @@ const Search: React.FC = () => {
 			const res = await axios.get(fetchURL);
 			setUsers(res.data.items);
 			setIsLoading(false);
-			setErrorMessage(null);
+
+			// if we get data back set errormessage to null, else set it to 'No user found'
+			res.data.items.length
+				? setErrorMessage(null)
+				: setErrorMessage('No user found');
 		} catch (err) {
 			// check what statuscode we are getting and decide errormessage depending on that
 			setIsLoading(false);

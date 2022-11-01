@@ -131,20 +131,19 @@ const UserPage: React.FC<Props> = ({ user }) => {
 								/>
 							)}
 						</section>
-						{filteredRepos.length > 0 && !isLoading && (
-							<NextPrev
-								page={page}
-								totalPages={totalPages}
-								itemsLength={filteredRepos.length}
-								onClickPreviousPage={onClickPreviousPage}
-								onClickNextPage={onClickNextPage}
-							/>
-						)}
+						{filteredRepos.length > 0 &&
+							!isLoading &&
+							user.public_repos > 30 && (
+								<NextPrev
+									page={page}
+									totalPages={totalPages}
+									itemsLength={filteredRepos.length}
+									onClickPreviousPage={onClickPreviousPage}
+									onClickNextPage={onClickNextPage}
+								/>
+							)}
 
 						{filteredRepos.length === 0 && <p>No repositories found...</p>}
-
-						{/* create searchbar with sorting functionality */}
-						{/* create list of repos - fill star when clicking*/}
 					</main>
 				</div>
 			</section>
