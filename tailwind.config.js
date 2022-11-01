@@ -38,6 +38,8 @@ module.exports = {
 				btnAccentHover: '#2ea043',
 				btnError: '#da3633',
 				btnErrorText: '#f85149',
+				filterPrimary: '#161b22',
+				filterHover: '#1f242c',
 			},
 		},
 	},

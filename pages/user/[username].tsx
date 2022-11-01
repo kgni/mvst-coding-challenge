@@ -16,10 +16,10 @@ import ReposList from '../../components/Repos/ReposList';
 */
 import gitHubColors from '../../data/gitHubColors.json' assert { type: 'JSON' };
 import NextPrev from '../../components/UI/Pagination/NextPrev';
-import Button from '../../components/UI/Buttons/Button';
 import Link from 'next/link';
 import { scrollToWindow } from '../../helpers/scrollTo';
-import Footer from '../../components/Footer';
+
+import applyRepoFilters from '../../helpers/applyRepoFilters';
 
 interface Props {
 	user: User;
@@ -29,11 +29,15 @@ interface Props {
 
 // TODO - how are we gonna search by keyword? (we can only fetch 100 pages at max, so we need to be able to query the API, and not only the repos that you fetched initally.)
 const UserPage: React.FC<Props> = ({ user }) => {
-	const [searchTerm, setSearchTerm] = useState('');
 	const [page, setPage] = useState(1);
 	const [repos, setRepos] = useState<Repo[]>(user.repos);
 	const [isLoading, setIsLoading] = useState(false);
 	const [errorMessage, setErrorMessage] = useState('');
+
+	// sorting/searching criteria states:
+	const [searchTerm, setSearchTerm] = useState('');
+	const [type, setType] = useState<'public' | 'forks'>('public');
+	const [sort, setSort] = useState<'lastUpdated' | 'name'>('lastUpdated');
 
 	// getting repos length, this will be used to determine if we can continue to go to a new page.
 	const reposLength = repos.length;
@@ -41,10 +45,8 @@ const UserPage: React.FC<Props> = ({ user }) => {
 	const itemsLimit = 30;
 	const totalPages = Math.ceil(reposLength / itemsLimit);
 
-	const filteredRepos = repos.filter(
-		(repo) =>
-			repo.name.includes(searchTerm) || repo.description?.includes(searchTerm)
-	);
+	// applying filters / sorts for repos.
+	const filteredRepos = applyRepoFilters(repos, searchTerm, type, sort);
 
 	// targeting repoListContainer so we can scroll to the top when clicking next, and previous buttons
 	const repoListContainer = useRef<HTMLInputElement>(null);
