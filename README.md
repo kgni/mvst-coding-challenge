@@ -87,10 +87,10 @@ Instead, we would want more descriptive error messages, depending on the error (
 
 The same goes for when we are fetching and doing the SSR for a user's info and repositories. Here we will simply just return a 404 page if something went wrong.
 
-### 5. Create a loader between pages
+### 6. Create a loader between pages
 Could implement a loader page for when we are switching pages from the search page to the user page.
 
-### 6. Minor lag when loading pages.
+### 7. Minor lag when loading pages.
 Loading animation for the user's repository list will sometimes lag on load. 
 Same goes for 
 
@@ -108,3 +108,5 @@ I really enjoyed doing this challenge, it was right up my alley.
 I think the amount of time for the challenge was fair, especially considering that I had to learn TypeScript (just the basics of course)
 
 Compared to other coding challenges I have done, I feel like this type of take-home gives a good insight into who you are as a developer, including your strengths and weaknesses.
+
+PS Sorry for the wall of text in the "Optimization" section. I definitely have to work on being more accurate when it comes to writing about technical stuff in English.
