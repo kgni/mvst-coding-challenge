@@ -38,4 +38,4 @@ export interface Repo {
 	languageColor: string;
 }
 
-export type ToastStatus = 'success' | 'error';
+export type MessageStatus = 'success' | 'error';

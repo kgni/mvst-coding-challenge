@@ -1,16 +1,16 @@
 import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import { ToastStatus } from '../../model';
+import { MessageStatus } from '../../model';
 
 interface Props {
 	className: string;
 	errorMessage?: string;
 	successMessage?: string;
-	status: ToastStatus;
+	status: MessageStatus;
 	onClose: () => void;
 }
 
-const Toast: React.FC<Props> = ({
+const StatusMessage: React.FC<Props> = ({
 	className,
 	errorMessage,
 	successMessage,
@@ -45,4 +45,4 @@ const Toast: React.FC<Props> = ({
 	);
 };
 
-export default Toast;
+export default StatusMessage;

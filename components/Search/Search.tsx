@@ -9,8 +9,8 @@ import Footer from '../Footer';
 import SearchBar from './SearchBar';
 import SearchResultsUsersDropDown from './SearchResultsUsersDropDown';
 import Button from '../UI/Buttons/Button';
-import Toast from '../UI/Toast';
 import Image from 'next/image';
+import StatusMessage from '../UI/StatusMessage';
 
 const Search: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState('');
@@ -82,7 +82,7 @@ const Search: React.FC = () => {
 					{/* AnimatePresence is used for exit animations (on unmount of the SearchResultsUserDropDown component) */}
 					<AnimatePresence>
 						{errorMessage && (
-							<Toast
+							<StatusMessage
 								status="error"
 								onClose={setErrorFalse}
 								errorMessage={errorMessage}
