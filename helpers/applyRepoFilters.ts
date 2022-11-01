@@ -9,7 +9,7 @@ export default function applyRepoFilters(
 	// general question. Do we want to create a new array in each filtering instance, so we don't mutate the original?
 
 	// if type is forks, we want to only get repos where fork is true
-	if (type === 'forks') {
+	if (type === 'Forks') {
 		repos = repos.filter((repo) => repo.fork);
 	}
 
@@ -22,7 +22,7 @@ export default function applyRepoFilters(
 	}
 
 	// sort by name
-	if (sort === 'name') {
+	if (sort === 'Name') {
 		repos.sort((a, b) => a.name.localeCompare(b.name));
 	}
 

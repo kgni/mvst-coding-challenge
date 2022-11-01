@@ -20,6 +20,7 @@ import Link from 'next/link';
 import { scrollToWindow } from '../../helpers/scrollTo';
 
 import applyRepoFilters from '../../helpers/applyRepoFilters';
+import FilterButton from '../../components/UI/Buttons/FilterButton';
 
 interface Props {
 	user: User;
@@ -36,8 +37,8 @@ const UserPage: React.FC<Props> = ({ user }) => {
 
 	// sorting/searching criteria states:
 	const [searchTerm, setSearchTerm] = useState('');
-	const [type, setType] = useState<'public' | 'forks'>('public');
-	const [sort, setSort] = useState<'lastUpdated' | 'name'>('lastUpdated');
+	const [type, setType] = useState<'Public' | 'Forks'>('Public');
+	const [sort, setSort] = useState<'lastUpdated' | 'Name'>('lastUpdated');
 
 	// getting repos length, this will be used to determine if we can continue to go to a new page.
 	const reposLength = repos.length;
@@ -97,16 +98,30 @@ const UserPage: React.FC<Props> = ({ user }) => {
 							</Link>
 						</div>
 						<section className="pb-2">
-							<form className="flex items-center gap-2 mb-4 ">
+							<form
+								onSubmit={(e) => e.preventDefault()}
+								className="flex gap-2 mb-4 "
+							>
 								<SearchBar
-									className="px-2 py-1 grow bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnText  text-btnText  duration-75"
+									className="px-2 py-1 grow bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnBorderHover  text-btnText  duration-75"
 									type="input"
 									value={searchTerm}
 									setPage={setPage}
 									onChange={setSearchTerm}
 									placeholder="Find a repository..."
 								/>
-								{/* TODO - fix this so button and search bar are same height */}
+								<FilterButton
+									title="Type"
+									subtitle="Select type"
+									selected={type}
+									options={['Public', 'Forks']}
+								/>
+								<FilterButton
+									title="Sort"
+									subtitle="Select type"
+									selected={type}
+									options={['Public', 'Forks']}
+								/>
 							</form>
 							{/* divider */}
 							<div className="w-full bg-btnBorder pr-2 h-[1px] mb-1"></div>

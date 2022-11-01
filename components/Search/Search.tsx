@@ -73,7 +73,7 @@ const Search: React.FC = () => {
 						placeholder="Enter GitHub username.."
 						value={searchTerm}
 						onChange={setSearchTerm}
-						className="p-2 bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnText  text-btnText  duration-75"
+						className="p-2 bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnBorderHover  text-btnText  duration-75"
 					/>
 					{/* AnimatePresence is used for exit animations (on unmount of the SearchResultsUserDropDown component) */}
 					<AnimatePresence>
