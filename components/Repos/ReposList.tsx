@@ -8,7 +8,6 @@ interface Props {
 }
 
 const ReposList: React.FC<Props> = ({ repos, page, itemsLimit }) => {
-	console.log(repos);
 	return (
 		<ul className="pr-3 md:mb-0 md:pr-0 repoList">
 			{repos

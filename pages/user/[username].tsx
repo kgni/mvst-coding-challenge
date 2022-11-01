@@ -220,7 +220,6 @@ export const getServerSideProps: GetServerSideProps<{
 		if (reposData.length === 0 || reposData.length < itemsLimit) {
 			break;
 		}
-		console.log('test');
 
 		// increment page for next fetch
 		page++;

@@ -27,7 +27,6 @@ const FilterDropDown: React.FC<Props> = ({
 						// We are basically looking at
 						<li
 							onClick={(e) => filterFunc(e.target.innerText)}
-							// onClick={() => console.log(`clicked ${option}`)}
 							className="hover:bg-filterHover pl-10"
 							key={option}
 						>

@@ -48,7 +48,6 @@ const Search: React.FC = () => {
 			setIsLoading(false);
 			setUsers([]);
 			setErrorMessage('No user found');
-			console.log(err);
 		}
 	}
 

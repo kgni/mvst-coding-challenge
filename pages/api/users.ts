@@ -13,6 +13,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			},
 		}
 	);
-	console.log(data.data);
 	res.status(200).json(data.data);
 };

@@ -19,8 +19,6 @@ const FilterButton: React.FC<Props> = ({
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
-	console.log(isOpen);
-
 	return (
 		<>
 			<div className="flex">
