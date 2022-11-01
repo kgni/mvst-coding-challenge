@@ -10,7 +10,6 @@ Contains functionality including searching for users and displaying/searching th
 ## How It's Made:
 
 **Tech used:** 
-
 HTML, CSS, TailwindCSS, TypeScript, React, Next.js, [GitHub API](https://docs.github.com/en/rest)
 
 
@@ -66,7 +65,7 @@ We have 3 ways of filtering/sorting client-side.
  3. Sort - by **name** or **last updated**
 
 **Downsides of doing client-side filtering compared to using query parameters with the API**
-With client-side filtering, we are not getting as in-depth search results as we would by using the specific endpoint for querying a specific user's owned repositories - the API is for example also looking in the readme for search terms, where we are currently only looking at the title and description
+With client-side filtering, we are not getting as in-depth search results as we would by using the specific endpoint for querying a specific user's own repositories - the API is for example also looking in the readme for search terms, where we are currently only looking at the title and description
 But as mentioned above, with this endpoint we won't get all the repositories that the user has forked, which is why I decided to go with the solution of fetching all repositories and then filtering them on the client side.
 
 ### 2. Possible to open both sort/filter drop-downs at once
@@ -77,6 +76,23 @@ Basically, I think a modal could fix this problem. So when you are clicking one 
 For more info, see the issue here
 I'm not sure if the small spinner on the user you clicked is making it clear enough that a request is being made.
 
+### 4. Write tests / add testing library
+Currently no tests are written for this application. This is certainly something that should be done in the future. 
+Both when it comes to unit, integration, and e2e testing.
+
+### 5. Add more comprehensive error handling
+For now, the status codes for errors are not taken into account.
+When searching for users "No user found" will be displayed for all errors. 
+Instead, we would want more descriptive error messages, depending on the error (status code) we are getting.
+
+The same goes for when we are fetching and doing the SSR for a user's info and repositories. Here we will simply just return a 404 page if something went wrong.
+
+### 5. Create a loader between pages
+Could implement a loader page for when we are switching pages from the search page to the user page.
+
+### 6. Minor lag when loading pages.
+Loading animation for the user's repository list will sometimes lag on load. 
+Same goes for 
 
 
 For more bugs/issues click [here](https://github.com/kgni/mvst-coding-challenge/issues)
