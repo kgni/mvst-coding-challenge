@@ -1,26 +1,28 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { GetServerSideProps } from 'next';
-import { Repo, User } from '../../model';
-import axios from 'axios';
-import { Oval } from 'react-loader-spinner';
+import Link from 'next/link';
 import Head from 'next/head';
 
-import { BiBookBookmark } from 'react-icons/bi';
+// models
+import { Repo, User } from '../../model';
 
+// helpers
+import { scrollToWindow } from '../../helpers/scrollTo';
+import applyRepoFilters from '../../helpers/applyRepoFilters';
+
+// components
+import NextPrev from '../../components/UI/Pagination/NextPrev';
+import { Oval } from 'react-loader-spinner';
+import { BiBookBookmark } from 'react-icons/bi';
 import UserAside from '../../components/User/UserAside';
 import SearchBar from '../../components/Search/SearchBar';
 import ReposList from '../../components/Repos/ReposList';
+import FilterButton from '../../components/UI/Buttons/FilterButton';
 
 /* gitHub language colors. each programming langauge on github has assigned a color. This is basically just a JSON file with all those colors
 	that we can then use to dynamically render the correct color based on the language used in a repo.
 */
 import gitHubColors from '../../data/gitHubColors.json' assert { type: 'JSON' };
-import NextPrev from '../../components/UI/Pagination/NextPrev';
-import Link from 'next/link';
-import { scrollToWindow } from '../../helpers/scrollTo';
-
-import applyRepoFilters from '../../helpers/applyRepoFilters';
-import FilterButton from '../../components/UI/Buttons/FilterButton';
 
 interface Props {
 	user: User;
@@ -70,13 +72,6 @@ const UserPage: React.FC<Props> = ({ user }) => {
 			</Head>
 			<section className="bg-primary">
 				<div className="h-screen w-full max-w-5xl flex gap-16 py-16 px-8 md:py-8  mx-auto text-text overflow-hidden md:flex-col md:gap-0 md:min-h-screen md:h-full">
-					{/* back to search button - not sure if this should be placed here or below */}
-					{/* <Link
-						className="text-sm text-title hover:underline absolute right-8"
-						href={'/'}
-					>
-						Back to search
-					</Link> */}
 					<UserAside user={user} />
 
 					{/* using flex and flex-col to make container take up the remaining height */}
@@ -175,56 +170,67 @@ export const getServerSideProps: GetServerSideProps<{
 	// This color will be set in a variable, and used in each Repo list item.
 	const gitHubColorsObject = JSON.parse(JSON.stringify(gitHubColors));
 
-	// getting username from url query. This will be used for fetching
+	// getting username from query. This will be used for fetching the correct user data.
 	const { username } = context.query;
 
-	// TODO - can we do anything else than fetching twice here? (Doesn't seem like it from the API)
 	// fetch user
-	const { data: userData } = await axios.get(
-		`https://api.github.com/users/${username}`,
-		{
+	const userData = await (
+		await fetch(`https://api.github.com/users/${username}`, {
 			headers: {
 				Authorization: `Bearer ${process.env.GITHUB_PERSONAL_TOKEN}`,
 			},
-		}
-	);
+		})
+	).json();
 
 	// initial page number for querying repos
 	let page = 1;
 
-	// amount of repos per page when querying:
-	const itemsLimit = 30;
+	// amount of repos per page when querying (30 is default)
+	const itemsLimit = 100;
 
 	// array for keeping track of all fetched repos.
 	const reposFetched: Repo[] = [];
 
 	// while loop that will keep fetching from the API (one page at a time), until we are either getting 0 repos back or the amount of repos we get back is less than the itemsLimit.
 	while (true) {
-		const { data: reposData } = await axios.get(
-			`https://api.github.com/users/${username}/repos?page=${page}&per_page=${itemsLimit}`,
-			{
-				headers: {
-					Authorization: `Bearer ${process.env.GITHUB_PERSONAL_TOKEN}`,
-				},
+		try {
+			const reposData = await (
+				await fetch(
+					`https://api.github.com/users/${username}/repos?page=${page}&per_page=${itemsLimit}`,
+					{
+						headers: {
+							Authorization: `Bearer ${process.env.GITHUB_PERSONAL_TOKEN}`,
+						},
+					}
+				)
+			).json();
+
+			console.log(reposData);
+
+			// push the fetched repos into our reposFetched array
+			reposFetched.push(...reposData);
+
+			// if we get an empty array back, or the length of the array is less than the itemsLimit (meaning that this was the last page of items), then we break out of the loop
+			if (reposData.length === 0 || reposData.length < itemsLimit) {
+				break;
 			}
-		);
 
-		// push the fetched repos into our reposFetched array
-		reposFetched.push(...reposData);
-
-		// if we get an empty array back, or the length of the array is less than the itemsLimit
-		if (reposData.length === 0 || reposData.length < itemsLimit) {
-			break;
+			// increment page for next fetch
+			page++;
+		} catch (e) {
+			// console.log(e);
+			// if an error ocurred return a 404 page
+			return {
+				notFound: true,
+			};
 		}
-
-		// increment page for next fetch
-		page++;
 	}
 
 	console.log('length', reposFetched.length);
-	// Sanitizing our repos data, to only contain what we need - not sure if this is the best way to do it.. We are still fetching all data from each repo anyways.
+
+	// Sanitizing our repos data, to only contain what we need - not sure if this is the best way to do it.. We are still fetching all data from each repo anyways, we are just not working with huge objects on the frontend.
 	const repos: Repo[] = reposFetched.map((repo: Repo) => {
-		// standard langauge color (if no langaugecolor was found)
+		// standard langauge color (if no langaugeColor was found in the github colors JSON)
 		let languageColor = '#8B949E';
 
 		// if there is a langauge, and there is a color for that languge from the JSON file we set the language color to the HEX value specified for that language in the JSON file.
@@ -248,51 +254,47 @@ export const getServerSideProps: GetServerSideProps<{
 	});
 
 	// extract all relevant userData
-	const {
-		id,
-		name,
-		login,
-		bio,
-		avatar_url,
-		url,
-		html_url,
-		repos_url,
-		followers,
-		following,
-		company,
-		blog,
-		location,
-		email,
-		twitter_username,
-		public_repos,
-	} = userData;
+	// const {
+	// 	id,
+	// 	name,
+	// 	login,
+	// 	bio,
+	// 	avatar_url,
+	// 	url,
+	// 	html_url,
+	// 	repos_url,
+	// 	followers,
+	// 	following,
+	// 	company,
+	// 	blog,
+	// 	location,
+	// 	email,
+	// 	twitter_username,
+	// 	public_repos,
+	// } = userData;
 
+	// 1 single user object, containing all the sanizited repos as well.
 	const user: User = {
-		id,
-		name,
-		login,
-		bio,
-		avatar_url,
-		url,
-		html_url,
-		repos_url,
-		followers,
-		following,
-		company,
-		blog,
-		location,
-		email,
-		twitter_username,
-		public_repos,
+		id: userData.id,
+		name: userData.name,
+		login: userData.login,
+		bio: userData.bio,
+		avatar_url: userData.avatar_url,
+		url: userData.url,
+		html_url: userData.html_url,
+		repos_url: userData.repos_url,
+		followers: userData.followers,
+		following: userData.follwing,
+		company: userData.company,
+		blog: userData.blog,
+		location: userData.location,
+		email: userData.email,
+		twitter_username: userData.twitter_username,
+		public_repos: userData.public_repos,
 		repos,
 	};
 
 	// With notFound: true, the page will return a 404 even if there was a successfully generated page before.
-	if (!userData) {
-		return {
-			notFound: true,
-		};
-	}
 
 	return {
 		props: {
