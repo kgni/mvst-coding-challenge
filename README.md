@@ -1,44 +1,94 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
 
-First, run the development server:
+# GITHUB REPO LIST
+Small project working with the GitHub API. 
+Contains functionality including searching for users and displaying/searching through all of their public repositories.
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+**Link to project:** https://mvst-github.vercel.app/
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![mvst-coding-challenge](https://user-images.githubusercontent.com/84397151/199331770-f18667a9-c032-4862-9a80-9eb3713c238b.png)
+## How It's Made:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+**Tech used:** 
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+HTML, CSS, TailwindCSS, TypeScript, React, Next.js, [GitHub API](https://docs.github.com/en/rest)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+## How to run it
+Install
 
-To learn more about Next.js, take a look at the following resources:
+    npm i
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run dev server on port 3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    npm run dev
+App is now running on http://localhost:3000/
 
-## Deploy on Vercel
+Start searching for users and get a list of all of their public repositories.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### GitHub API Rate limit
+By default you are limited to 60 requests/hr (unauthorized users), however, it is possible to bump this up to 5000 requests/hr by adding a personal access token.
 
-## GITHUB API
-
-### GitHub Personal Access Token:
-
-To get more requests per hour, and potentially more detailed responses, add your own access token as an environment variable.
+To get more requests per hour, and potentially more detailed responses, add your own personal access token as an environment variable to `env.local` file in your `root` directory.
 
 - GITHUB_PERSONAL_TOKEN={your_token_here}
 
-https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+You can find more info on how to create GitHub Personal Access Tokens [here](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+
+
+## Optimizations
+
+### 1. Query a users repositories using API endpoint query parameters
+
+Currently, all repositories for a specific user are being fetched on initial load, using SSR. 
+
+The GitHub API has an endpoint, where you can fetch repositories owned by a specific user: 
+`GET search/repositories?q=+user:{user}`
+
+Currently, this endpoint is NOT being used, because I could only figure out how to get the repositories owned by the user, and NOT the repositories the user had also forked.
+
+**How we are currently getting all repositories for a user included forked ones**
+All user repositories are instead being fetched by using another endpoint: `GET users/{user}/repos`
+
+100 repositories are being fetched per page. To ensure we are getting all repositories for a user (if they have more than 100), a loop is made. 
+This loop will do another fetch for the next 100 repositories if we are getting 100 back, if we get less than 100 back it means that we have fetched all repositories and we will break out of the loop, and return all the fetched repositories.
+
+Because we most of the time are getting a small set of repositories back, you could argue that this is a viable way for fetching all repositories. However, for bigger datasets, we would run into performance issues where we would have long loading times, and in that case, it would be preferred to take advantage of the implemented server-side pagination that the API has. 
+
+**How filtering of repositories is currently done**
+Currently, the filtering is made only in the front end, because (as mentioned) I couldn't figure out how to query all public repos for a user (including the forked repos). 
+
+We have 3 ways of filtering/sorting client-side.
+
+ 1. By ***search term*** - only by title and description
+ 2. By ***type*** (public/all or forked repositories)
+ 3. Sort - by **name** or **last updated**
+
+**Downsides of doing client-side filtering compared to using query parameters with the API**
+With client-side filtering, we are not getting as in-depth search results as we would by using the specific endpoint for querying a specific user's owned repositories - the API is for example also looking in the readme for search terms, where we are currently only looking at the title and description
+But as mentioned above, with this endpoint we won't get all the repositories that the user has forked, which is why I decided to go with the solution of fetching all repositories and then filtering them on the client side.
+
+### 2. Possible to open both sort/filter drop-downs at once
+For more info, see the issue here
+Basically, I think a modal could fix this problem. So when you are clicking one of the buttons, an invisible modal appears underneath the modal filling the entire screen - when we click anywhere the drop-down will close/disappear
+
+### 3. Make the loading state more clear after clicking a user.
+For more info, see the issue here
+I'm not sure if the small spinner on the user you clicked is making it clear enough that a request is being made.
+
+
+
+For more bugs/issues click [here](https://github.com/kgni/mvst-coding-challenge/issues)
+
+## Lessons Learned:
+
+This was my first time ever working with TypeScript. I learned a lot about the basics of TypeScript, and how to use it in React. I'm starting to see the patterns, and how powerful it really is.  I wouldn't voluntarily want to go back to vanilla JavaScript after I've seen how powerful and all of the benefits TypeScript brings. I can see why it is an industry-standard and how it can save many hours in the long run.
+
+I also learned about the GitHub API, including its limitations when it comes to fetching user-specific repositories.
+
+## Feedback
+I really enjoyed doing this challenge, it was right up my alley. 
+I think the amount of time for the challenge was fair, especially considering that I had to learn TypeScript (just the basics of course)
+
+Compared to other coding challenges I have done, I feel like this type of take-home gives a good insight into who you are as a developer, including your strengths and weaknesses.
