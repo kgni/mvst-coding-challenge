@@ -10,6 +10,7 @@ import SearchBar from './SearchBar';
 import SearchResultsUsersDropDown from './SearchResultsUsersDropDown';
 import Button from '../UI/Buttons/Button';
 import Toast from '../UI/Toast';
+import Image from 'next/image';
 
 const Search: React.FC = () => {
 	const [searchTerm, setSearchTerm] = useState('');
@@ -59,8 +60,16 @@ const Search: React.FC = () => {
 	}
 
 	return (
-		<section className="pt-48 searchPage">
+		<section className="pt-20 searchPage ">
 			<div className="max-w-full w-96 mx-auto">
+				<div className="flex justify-center mb-20">
+					<Image
+						src="/logo/mvst_github_logo.svg"
+						alt="logo"
+						width={80}
+						height={80}
+					/>
+				</div>
 				<form onSubmit={onSubmitSearchUser}>
 					<SearchBar
 						type="input"

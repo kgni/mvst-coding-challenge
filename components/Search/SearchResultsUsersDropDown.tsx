@@ -73,7 +73,7 @@ const SearchResultsUsersDropDown: React.FC<Props> = ({ users }) => {
 											<Oval
 												width={25}
 												height={25}
-												color="black"
+												color="#0d1117"
 												secondaryColor="gray"
 												strokeWidth={5}
 											/>
