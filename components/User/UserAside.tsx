@@ -40,19 +40,22 @@ const UserAside: React.FC<Props> = ({ user }) => {
 			{/* On medium mobile devices and below, we want to render a topbar on scroll */}
 			{isMediumMobile && (
 				<>
-					<AnimatePresence>
-						{scrollPosition > 600 && (
-							<UserTopBarMobile
-								isOpen={isTopBarOpen}
-								setIsOpen={setIsTopBarOpen}
-								onClick={() => scrollToWindow(0, 0, 'smooth')}
-								user={user}
-								closeButton={true}
-							/>
-						)}
-					</AnimatePresence>
+					{/* <AnimatePresence> */}
+					{scrollPosition > 600 && (
+						<UserTopBarMobile
+							isOpen={isTopBarOpen}
+							setIsOpen={setIsTopBarOpen}
+							onClick={() => scrollToWindow(0, 0, 'smooth')}
+							user={user}
+							closeButton={true}
+						/>
+					)}
+					{/* </AnimatePresence> */}
 				</>
 			)}
+
+			{/* TODO - currently there is a small bug where on small devices it will show a glimpse of the medium text*/}
+
 			{/* On everything above Small Mobile device, render this text */}
 			{!isSmallMobile && <UserAsideTextDesktop user={user} />}
 			{/* {On smaller mobile devices render this */}

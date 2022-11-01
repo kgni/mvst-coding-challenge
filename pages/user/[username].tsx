@@ -171,7 +171,7 @@ export const getServerSideProps: GetServerSideProps<{
 		`https://api.github.com/users/${username}`,
 		{
 			headers: {
-				Authorization: `Bearer ${process.env.API_ACCESS_TOKEN}`,
+				Authorization: `Bearer ${process.env.GITHUB_PERSONAL_TOKEN}`,
 			},
 		}
 	);
@@ -191,7 +191,7 @@ export const getServerSideProps: GetServerSideProps<{
 			`https://api.github.com/users/${username}/repos?page=${page}&per_page=${itemsLimit}`,
 			{
 				headers: {
-					Authorization: `Bearer ${process.env.API_ACCESS_TOKEN}`,
+					Authorization: `Bearer ${process.env.GITHUB_PERSONAL_TOKEN}`,
 				},
 			}
 		);
