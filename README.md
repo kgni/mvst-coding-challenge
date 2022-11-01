@@ -59,7 +59,8 @@ All user repositories are instead being fetched by using another endpoint: `GET 
 100 repositories are being fetched per page. To ensure we are getting all repositories for a user (if they have more than 100), a loop is made. 
 This loop will do another fetch for the next 100 repositories if we are getting 100 back, if we get less than 100 back it means that we have fetched all repositories and we will break out of the loop, and return all the fetched repositories.
 
-Because we most of the time are getting a small set of repositories back, you could argue that this is a viable way for fetching all repositories. However, for bigger datasets, we would run into performance issues where we would have long loading times, and in that case, it would be preferred to take advantage of the implemented server-side pagination that the API has. 
+Because we most of the time are getting a small set of repositories back, you could argue that this is a viable way for fetching all repositories. 
+However, for bigger datasets, we would run into performance issues where we would have long loading times, and in that case, it would be preferred to take advantage of the implemented server-side pagination that the API has. 
 
 ### How filtering of repositories is currently done
 
@@ -73,15 +74,18 @@ We have 3 ways of filtering/sorting client-side.
 
 ### Downsides of doing client-side filtering compared to using query parameters with the API
 
-With client-side filtering, we are not getting as in-depth search results as we would by using the specific endpoint for querying a specific user's own repositories - the API is for example also looking in the readme for search terms, where we are currently only looking at the title and description
+With client-side filtering, we are not getting as in-depth search results as we would by using the specific endpoint for querying a specific user's own repositories - the API is for example also looking in the readme for search terms, where we are currently only looking at the title and description.
+
 But as mentioned above, with this endpoint we won't get all the repositories that the user has forked, which is why I decided to go with the solution of fetching all repositories and then filtering them on the client side.
 
 ### 2. Possible to open both sort/filter drop-downs at once
-For more info, see the issue here
+For more info, see the issue [here](https://github.com/kgni/mvst-coding-challenge/issues/2)
+
 Basically, I think a modal could fix this problem. So when you are clicking one of the buttons, an invisible modal appears underneath the modal filling the entire screen - when we click anywhere the drop-down will close/disappear
 
 ### 3. Make the loading state more clear after clicking a user.
-For more info, see the issue here
+For more info, see the issue [here](https://github.com/kgni/mvst-coding-challenge/issues/1)
+
 I'm not sure if the small spinner on the user you clicked is making it clear enough that a request is being made.
 
 ### 4. Write tests / add testing library
@@ -91,6 +95,7 @@ Both when it comes to unit, integration, and e2e testing.
 ### 5. Add more comprehensive error handling
 For now, the status codes for errors are not taken into account.
 When searching for users "No user found" will be displayed for all errors. 
+
 Instead, we would want more descriptive error messages, depending on the error (status code) we are getting.
 
 The same goes for when we are fetching and doing the SSR for a user's info and repositories. Here we will simply just return a 404 page if something went wrong.
