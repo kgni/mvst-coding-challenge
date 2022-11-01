@@ -163,6 +163,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 
 export default UserPage;
 
+// SSR
 export const getServerSideProps: GetServerSideProps<{
 	user: User;
 }> = async (context) => {
