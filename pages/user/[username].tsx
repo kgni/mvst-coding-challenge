@@ -284,7 +284,7 @@ export const getServerSideProps: GetServerSideProps<{
 		html_url: userData.html_url,
 		repos_url: userData.repos_url,
 		followers: userData.followers,
-		following: userData.follwing,
+		following: userData.following,
 		company: userData.company,
 		blog: userData.blog,
 		location: userData.location,
