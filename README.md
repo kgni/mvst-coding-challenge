@@ -56,6 +56,7 @@ This loop will do another fetch for the next 100 repositories if we are getting 
 Because we most of the time are getting a small set of repositories back, you could argue that this is a viable way for fetching all repositories. However, for bigger datasets, we would run into performance issues where we would have long loading times, and in that case, it would be preferred to take advantage of the implemented server-side pagination that the API has. 
 
 **How filtering of repositories is currently done**
+
 Currently, the filtering is made only in the front end, because (as mentioned) I couldn't figure out how to query all public repos for a user (including the forked repos). 
 
 We have 3 ways of filtering/sorting client-side.
@@ -65,6 +66,7 @@ We have 3 ways of filtering/sorting client-side.
  3. Sort - by **name** or **last updated**
 
 **Downsides of doing client-side filtering compared to using query parameters with the API**
+
 With client-side filtering, we are not getting as in-depth search results as we would by using the specific endpoint for querying a specific user's own repositories - the API is for example also looking in the readme for search terms, where we are currently only looking at the title and description
 But as mentioned above, with this endpoint we won't get all the repositories that the user has forked, which is why I decided to go with the solution of fetching all repositories and then filtering them on the client side.
 
