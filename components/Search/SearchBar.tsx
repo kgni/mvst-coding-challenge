@@ -1,8 +1,6 @@
 import React, { ChangeEvent, useState } from 'react';
 import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
 
-// beacuse I want to be able to pass in anything as a attribute to an input, I'm setting  any  - I'm not sure what the best practice is here, but I don't think it is setting it to any. Maybe an Interface where the inputprops are set to string | number, and then we can take it from there?
-
 interface Props {
 	type: string;
 	id?: string;
@@ -21,7 +19,6 @@ const SearchBar: React.FC<Props> = ({
 	setPage,
 	onChange,
 }) => {
-	const [placeholderState, setPlaceholderState] = useState(placeholder);
 	const [isFocus, setIsFocus] = useState(false);
 
 	// setIsFocus functions that we are using to set the focus state, for controlling the icons and color of those depending on if the the searchbar is focused or not.
@@ -35,11 +32,11 @@ const SearchBar: React.FC<Props> = ({
 
 	function onMouseDownClearInput() {
 		onChange('');
-		setPlaceholderState(placeholder);
 		setIsFocus(false);
 	}
 
 	function onChangeSetValue(e: ChangeEvent<HTMLInputElement>) {
+		// condtionally execute setPage, because setPage is an optional value, we only want to execute it in some cases.
 		setPage?.(1);
 		onChange(e.target.value);
 	}
@@ -55,7 +52,7 @@ const SearchBar: React.FC<Props> = ({
 				onFocus={onFocusSetPlaceholder}
 				onBlur={onBlurSetPlaceholder}
 				onChange={onChangeSetValue}
-				placeholder={placeholderState}
+				placeholder={placeholder}
 			></input>
 			{!value && (
 				<label htmlFor={id} className="absolute right-2">

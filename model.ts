@@ -1,5 +1,3 @@
-// TODO - READ UP ON API, AND DECIDE WHICH FIELDS CAN BE NULL - THEN CONDTIONALLY RENDER IN YOUR CODE DEPENDING ON IF IT CAN BE NULL OR NOT?
-
 export interface User {
 	id: number;
 	name: string | null;

@@ -26,9 +26,6 @@ interface Props {
 	user: User;
 }
 
-// TODO - CREATE BACK BUTTON TO GO BACK TO SEARCH
-
-// TODO - how are we gonna search by keyword? (we can only fetch 100 pages at max, so we need to be able to query the API, and not only the repos that you fetched initally.)
 const UserPage: React.FC<Props> = ({ user }) => {
 	const [page, setPage] = useState(1);
 	const [repos, setRepos] = useState<Repo[]>(user.repos);
@@ -84,7 +81,6 @@ const UserPage: React.FC<Props> = ({ user }) => {
 
 					{/* using flex and flex-col to make container take up the remaining height */}
 					<main className="w-2/3 flex flex-col md:w-full">
-						{/* TODO - create tabs */}
 						<div className="flex mb-4 items-center justify-between">
 							<div className="flex items-center border-b-accent border-b-[1px] pb-2 gap-2">
 								<BiBookBookmark />
@@ -270,8 +266,6 @@ export const getServerSideProps: GetServerSideProps<{
 		twitter_username,
 		public_repos,
 	} = userData;
-
-	// TODO - sanitize repos, current how to do this, so they look like the interface?
 
 	const user: User = {
 		id,

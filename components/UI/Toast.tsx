@@ -17,6 +17,7 @@ const Toast: React.FC<Props> = ({
 	status,
 	onClose,
 }) => {
+	// general styles
 	const sharedStyles = `w-full rounded-md mb-4 font-semi flex items-center justify-center relative ${className}`;
 
 	// on error

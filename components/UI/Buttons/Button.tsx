@@ -20,6 +20,7 @@ const Button: React.FC<Props> = ({
 			className={`text-white bg-btnAccent py-[2px] rounded-md hover:bg-btnAccentHover duration-75 flex justify-center items-center gap-2 ${className}`}
 		>
 			{children}
+			{/* if isLoading state is passed in, render spinner when loading */}
 			{isLoading && (
 				<Oval
 					width={15}

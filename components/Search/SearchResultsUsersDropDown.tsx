@@ -16,7 +16,7 @@ interface Props {
 	users: UserSearchResult[];
 }
 
-const SearchResultsUserDropDown: React.FC<Props> = ({ users }) => {
+const SearchResultsUsersDropDown: React.FC<Props> = ({ users }) => {
 	return (
 		<>
 			{users.length > 0 && (
@@ -58,4 +58,4 @@ const SearchResultsUserDropDown: React.FC<Props> = ({ users }) => {
 	);
 };
 
-export default SearchResultsUserDropDown;
+export default SearchResultsUsersDropDown;
