@@ -12,6 +12,12 @@ Contains functionality including searching for users and displaying/searching th
 **Tech used:** 
 HTML, CSS, TailwindCSS, TypeScript, React, Next.js, [GitHub API](https://docs.github.com/en/rest)
 
+**API endpoints used**
++ [Search users](https://docs.github.com/en/rest/search#search-users)
++ [Fetch user repositories](https://docs.github.com/en/rest/repos/repos#list-repositories-for-a-user)
+
+
+
 
 ## How to run it
 Install
@@ -40,7 +46,7 @@ You can find more info on how to create GitHub Personal Access Tokens [here](htt
 
 ### 1. Query a users repositories using API endpoint query parameters
 
-Currently, all repositories for a specific user are being fetched on initial load, using SSR. 
+Currently, all repositories for a specific user are being fetched on load, and the data is being rendered on the server using SSR.
 
 The GitHub API has an endpoint, where you can fetch repositories owned by a specific user: 
 `GET search/repositories?q=+user:{user}`
