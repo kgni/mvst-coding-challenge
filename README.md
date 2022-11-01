@@ -39,6 +39,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 To get more requests per hour, and potentially more detailed responses, add your own access token as an environment variable.
 
-- API_ACCESS_TOKEN={your_token_here}
+- GITHUB_PERSONAL_TOKEN={your_token_here}
 
 https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token

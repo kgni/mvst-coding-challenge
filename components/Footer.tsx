@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
 				href="https://github.com/kgni"
 				target="_blank"
 				rel="noreferrer"
-				className="text-btnText cursor-pointer hover:text-title"
+				className="text-btnText cursor-pointer hover:text-title active:text-title"
 			>
 				kgni
 			</a>

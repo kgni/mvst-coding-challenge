@@ -16,7 +16,7 @@ import ReposList from '../../components/Repos/ReposList';
 */
 import gitHubColors from '../../data/gitHubColors.json' assert { type: 'JSON' };
 import NextPrev from '../../components/UI/Pagination/NextPrev';
-import Button from '../../components/UI/Button';
+import Button from '../../components/UI/Buttons/Button';
 import Link from 'next/link';
 import { scrollToWindow } from '../../helpers/scrollTo';
 import Footer from '../../components/Footer';
@@ -65,9 +65,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 	return (
 		<>
 			<Head>
-				<title>
-					{user.login} {user.name && `(${user.name})`}
-				</title>
+				<title>{user.login}</title>
 				<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 			</Head>
 			<section className="bg-primary">

@@ -49,7 +49,7 @@ const UserTopBarMobile: React.FC<Props> = ({
 					{closeButton && (
 						<AiOutlineClose
 							onClick={() => setIsOpen(false)}
-							className="cursor-pointer text-lg text-black absolute top-2 right-2 select-none"
+							className="cursor-pointer text-md text-black absolute top-2 right-2 select-none"
 						/>
 					)}
 				</motion.div>

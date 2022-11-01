@@ -5,7 +5,7 @@ import axios from 'axios';
 // Components
 import SearchBar from './SearchBar';
 import SearchResultsUserDropDown from './SearchResultsUserDropDown';
-import Button from '../UI/Button';
+import Button from '../UI/Buttons/Button';
 import Toast from '../UI/Toast';
 
 // Models
@@ -89,7 +89,7 @@ const Search: React.FC = () => {
 						{users && <SearchResultsUserDropDown users={users} />}
 					</AnimatePresence>
 					{/* TODO - Move this inside Searchbar inside the form (give better name to SearchBar) */}
-					<Button isLoading={isLoading} className="w-full mt-2">
+					<Button isLoading={isLoading} className="w-full mt-2 select-none">
 						Find User
 					</Button>
 				</form>

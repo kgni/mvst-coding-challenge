@@ -24,22 +24,12 @@ const SearchBar: React.FC<Props> = ({
 	const [placeholderState, setPlaceholderState] = useState(placeholder);
 	const [isFocus, setIsFocus] = useState(false);
 
-	// the two onFocus and onBlur functions, does so we are not causing a re-render every single time we focus or blur.
-
-	// TODO - get rid of this, and handle the hover/focus states with CSS.
-	// there is no need to remove the placeholder text when, so basically you are micromanaging and doing the job that the browser should do.
-
+	// setIsFocus functions that we are using to set the focus state, for controlling the icons and color of those depending on if the the searchbar is focused or not.
 	function onFocusSetPlaceholder() {
-		if (!value) {
-			setPlaceholderState('');
-		}
 		setIsFocus(true);
 	}
 
 	function onBlurSetPlaceholder() {
-		if (!value) {
-			setPlaceholderState(placeholder);
-		}
 		setIsFocus(false);
 	}
 
@@ -67,7 +57,7 @@ const SearchBar: React.FC<Props> = ({
 				onChange={onChangeSetValue}
 				placeholder={placeholderState}
 			></input>
-			{!value && !isFocus && (
+			{!value && (
 				<label htmlFor={id} className="absolute right-2">
 					{' '}
 					<AiOutlineSearch
@@ -78,7 +68,7 @@ const SearchBar: React.FC<Props> = ({
 				</label>
 			)}
 
-			{(isFocus || value) && (
+			{isFocus && value && (
 				<AiOutlineClose
 					onMouseDown={onMouseDownClearInput}
 					className={`${
