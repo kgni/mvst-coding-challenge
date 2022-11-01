@@ -38,7 +38,7 @@ const UserPage: React.FC<Props> = ({ user }) => {
 	// sorting/searching criteria states:
 	const [searchTerm, setSearchTerm] = useState('');
 	const [type, setType] = useState<'Public' | 'Forks'>('Public');
-	const [sort, setSort] = useState<'lastUpdated' | 'Name'>('lastUpdated');
+	const [sort, setSort] = useState<'Last updated' | 'Name'>('Last updated');
 
 	// getting repos length, this will be used to determine if we can continue to go to a new page.
 	const reposLength = repos.length;
@@ -103,24 +103,26 @@ const UserPage: React.FC<Props> = ({ user }) => {
 								className="flex gap-2 mb-4 "
 							>
 								<SearchBar
-									className="px-2 py-1 grow bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text focus:outline-none outline-none focus:border-btnBorderHover  text-btnText  duration-75"
+									className="px-2 py-1 grow bg-primary border-[1px] border-btnBorder placeholder:font-thin w-full rounded-md  placeholder:text-text placeholder:sm:text-sm focus:outline-none outline-none focus:border-btnBorderHover  text-btnText  duration-75"
 									type="input"
 									value={searchTerm}
 									setPage={setPage}
 									onChange={setSearchTerm}
-									placeholder="Find a repository..."
+									placeholder="Find repositories..."
 								/>
 								<FilterButton
 									title="Type"
 									subtitle="Select type"
 									selected={type}
 									options={['Public', 'Forks']}
+									filterFunc={setType}
 								/>
 								<FilterButton
 									title="Sort"
-									subtitle="Select type"
-									selected={type}
-									options={['Public', 'Forks']}
+									subtitle="Select order"
+									selected={sort}
+									options={['Last updated', 'Name']}
+									filterFunc={setSort}
 								/>
 							</form>
 							{/* divider */}

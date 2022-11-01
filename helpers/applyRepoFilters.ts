@@ -14,7 +14,7 @@ export default function applyRepoFilters(
 	}
 
 	// sort from most recent updated
-	if (sort === 'lastUpdated') {
+	if (sort === 'Last updated') {
 		repos.sort(
 			(a, b) =>
 				new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
