@@ -175,13 +175,18 @@ export const getServerSideProps: GetServerSideProps<{
 	// getting username from query. This will be used for fetching the correct user data.
 	const { username } = context.query;
 
+	// create header depending on if we have a token or not
+	let headers: object = process.env.GITHUB_PERSONAL_TOKEN
+		? {
+				headers: {
+					Authorization: `Bearer ${process.env.GITHUB_PERSONAL_TOKEN}`,
+				},
+		  }
+		: {};
+
 	// fetch user
 	const userData = await (
-		await fetch(`https://api.github.com/users/${username}`, {
-			headers: {
-				Authorization: `Bearer ${process.env.GITHUB_PERSONAL_TOKEN}`,
-			},
-		})
+		await fetch(`https://api.github.com/users/${username}`, headers)
 	).json();
 
 	// initial page number for querying repos
@@ -199,11 +204,7 @@ export const getServerSideProps: GetServerSideProps<{
 			const reposData = await (
 				await fetch(
 					`https://api.github.com/users/${username}/repos?page=${page}&per_page=${itemsLimit}`,
-					{
-						headers: {
-							Authorization: `Bearer ${process.env.GITHUB_PERSONAL_TOKEN}`,
-						},
-					}
+					headers
 				)
 			).json();
 
